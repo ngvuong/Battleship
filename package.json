@@ -1,0 +1,26 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "A simple Battleship game played against a computer or with two players.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngvuong/Battleship.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ngvuong/Battleship/issues"
+  },
+  "homepage": "https://github.com/ngvuong/Battleship#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.15.8",
+    "jest": "^27.2.5",
+    "webpack": "^5.58.2",
+    "webpack-cli": "^4.9.0"
+  }
+}
