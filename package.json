@@ -1,7 +1,7 @@
 {
   "name": "battleship",
   "version": "1.0.0",
-  "description": "A simple Battleship game played against a computer or with two players.",
+  "description": "A simple Battleship game played against a computer.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
