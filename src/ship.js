@@ -1,6 +1,18 @@
-export function Ship(length, positions = []) {
+export function Ship(length) {
+  const shipPositions = {};
+
   const getLength = () => {
     return length;
+  };
+
+  const getPositions = () => {
+    return shipPositions;
+  };
+
+  const setPositions = (positions) => {
+    positions.forEach((pos) => {
+      shipPositions[pos] = { isHit: false };
+    });
   };
 
   const hit = (position) => {
@@ -11,5 +23,5 @@ export function Ship(length, positions = []) {
 
   const isSunk = () => {};
 
-  return { getLength, hit, isSunk };
+  return { getLength, getPositions, setPositions, isSunk };
 }
