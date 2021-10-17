@@ -2,15 +2,15 @@ import { Gameboard } from "../gameboard";
 import { Ship } from "../ship";
 
 let ship;
-let board;
+let gameBoard;
 beforeAll(() => {
   ship = Ship(2);
-  board = Gameboard();
+  gameBoard = Gameboard();
 });
 
 it("creates a gameboard with 100 named coordinates", () => {
   expect(
-    Object.keys(board.board).every((key) => board.board[key] === null)
+    Object.keys(gameBoard.board).every((key) => gameBoard.board[key] === null)
   ).toBe(true);
 });
 
@@ -22,8 +22,12 @@ it("places the ship on the board", () => {
 });
 
 it("takes an attack that misses", () => {
-  board.receiveAttack("A1");
-  expect(board.board["A1"]).toBe(0);
+  gameBoard.receiveAttack("A1");
+  expect(gameBoard.board["A1"]).toBe(0);
 });
 
-it("takes an attack that hits a ship", () => {});
+it("takes an attack that hits a ship", () => {
+  gameBoard.placeShip(ship, ["A1", "A2"]);
+  gameBoard.receiveAttack("A1");
+  expect(gameBoard.board["A1"]).toBe(-1);
+});

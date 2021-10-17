@@ -1,3 +1,5 @@
+import { pubsub } from "./pubsub";
+
 export function Gameboard() {
   const board = {};
 
@@ -21,6 +23,7 @@ export function Gameboard() {
       board[coordinates] = 0;
     } else if (board[coordinates] === 1) {
       board[coordinates] = -1;
+      pubsub.emit("attack", coordinates);
     }
   };
 
