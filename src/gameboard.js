@@ -10,12 +10,19 @@ export function Gameboard() {
     row.forEach((position) => (board[position] = null))
   );
 
-  const placeShip = (ship, coordinates) => {
-    ship.setPositions(coordinates);
+  const placeShip = (ship, positions) => {
+    ship.setPositions(positions);
+    positions.forEach((coord) => (board[coord] = 1));
     return ship.getPositions();
   };
 
-  const receiveAttack = (coordinates) => {};
+  const receiveAttack = (coordinates) => {
+    if (board[coordinates] === null) {
+      board[coordinates] = 0;
+    } else if (board[coordinates] === 1) {
+      board[coordinates] = -1;
+    }
+  };
 
-  return { board, placeShip };
+  return { board, placeShip, receiveAttack };
 }
