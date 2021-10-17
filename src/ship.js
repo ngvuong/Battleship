@@ -16,12 +16,16 @@ export function Ship(length) {
   };
 
   const hit = (position) => {
-    if (positions.includes(position)) {
-      console.log("hit");
+    if (Object.keys(shipPositions).includes(position)) {
+      shipPositions[position].isHit = true;
     }
   };
 
-  const isSunk = () => {};
+  const isSunk = () => {
+    return Object.keys(shipPositions).every(
+      (key) => (shipPositions[key].isHit = true)
+    );
+  };
 
-  return { getLength, getPositions, setPositions, isSunk };
+  return { getLength, hit, getPositions, setPositions, isSunk };
 }

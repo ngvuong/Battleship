@@ -16,3 +16,21 @@ it("sets positions for the ship", () => {
     a5: { isHit: false },
   });
 });
+
+it("marks ship position as hit", () => {
+  const ship = Ship(2);
+  ship.setPositions(["a1", "b1"]);
+  ship.hit("a1");
+  expect(ship.getPositions()).toEqual({
+    a1: { isHit: true },
+    b1: { isHit: false },
+  });
+});
+
+it("marks ship as sunk when all positions are hit", () => {
+  const ship = Ship(2);
+  ship.setPositions(["a1", "b1"]);
+  ship.hit("a1");
+  ship.hit("b1");
+  expect(ship.isSunk()).toBe(true);
+});
