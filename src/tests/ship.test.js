@@ -1,7 +1,6 @@
 import { Ship } from "../ship";
 
 it("creates a ship object with length 5", () => {
-  expect(Ship(2)).toBeTruthy();
   expect(Ship(5).getLength()).toBe(5);
 });
 
