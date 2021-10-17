@@ -3,7 +3,7 @@ export const pubsub = (function () {
 
   const on = (evt, callback) => {
     events[evt] = events[evt] || [];
-    events.push(callback);
+    events[evt].push(callback);
   };
 
   const emit = (evt, data) => {

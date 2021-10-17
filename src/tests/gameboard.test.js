@@ -30,4 +30,12 @@ it("takes an attack that hits a ship", () => {
   gameBoard.placeShip(ship, ["A1", "A2"]);
   gameBoard.receiveAttack("A1");
   expect(gameBoard.board["A1"]).toBe(-1);
+  expect(ship.getPositions()["A1"]).toEqual({ isHit: true });
+});
+
+it("takes an attack that hits and sinks a ship", () => {
+  gameBoard.placeShip(ship, ["A1", "A2"]);
+  gameBoard.receiveAttack("A1");
+  gameBoard.receiveAttack("A2");
+  expect(ship.isSunk()).toBe(true);
 });

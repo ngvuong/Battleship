@@ -1,3 +1,5 @@
+import { pubsub } from "./pubsub";
+
 export function Ship(length) {
   const shipPositions = {};
 
@@ -14,12 +16,12 @@ export function Ship(length) {
       shipPositions[pos] = { isHit: false };
     });
   };
-
   const hit = (position) => {
     if (Object.keys(shipPositions).includes(position)) {
       shipPositions[position].isHit = true;
     }
   };
+  pubsub.on("attack", hit);
 
   const isSunk = () => {
     return Object.keys(shipPositions).every(
