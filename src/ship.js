@@ -21,11 +21,11 @@ export function Ship(length) {
       shipPositions[position].isHit = true;
     }
   };
-  pubsub.on("attack", hit);
+  pubsub.on("receivedAttack", hit);
 
   const isSunk = () => {
     return Object.keys(shipPositions).every(
-      (key) => (shipPositions[key].isHit = true)
+      (key) => shipPositions[key].isHit === true
     );
   };
 

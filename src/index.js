@@ -1,6 +1,10 @@
 import { Ship } from "./ship";
+import { Gameboard } from "./gameboard";
 
 const carrier = Ship(5);
 
-carrier.setPositions(["a1", "a2", "a3", "a4", "a5"]);
+const gb = Gameboard();
+gb.placeShip(carrier, ["A1", "A2", "A3", "A4", "A5"]);
+gb.receiveAttack("A1");
+gb.receiveAttack("B1");
 console.log(carrier.getPositions());

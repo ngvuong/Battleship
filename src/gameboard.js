@@ -2,6 +2,7 @@ import { pubsub } from "./pubsub";
 
 export function Gameboard() {
   const board = {};
+  const ships = [];
 
   const xCoord = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
   const yCoord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -15,6 +16,7 @@ export function Gameboard() {
   const placeShip = (ship, positions) => {
     ship.setPositions(positions);
     positions.forEach((coord) => (board[coord] = 1));
+    ships.push(ship);
     return ship.getPositions();
   };
 
@@ -23,9 +25,11 @@ export function Gameboard() {
       board[coordinates] = 0;
     } else if (board[coordinates] === 1) {
       board[coordinates] = -1;
-      pubsub.emit("attack", coordinates);
+      pubsub.emit("receivedAttack", coordinates);
     }
   };
 
-  return { board, placeShip, receiveAttack };
+  const allShipsSunk = () => ships.every((ship) => ship.isSunk());
+
+  return { board, placeShip, receiveAttack, allShipsSunk };
 }
