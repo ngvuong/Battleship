@@ -6,11 +6,15 @@ export const pubsub = (function () {
     events[evt].push(callback);
   };
 
+  const off = (evt, callback) => {
+    events[evt] = events[evt].filter((cb) => cb !== callback);
+  };
+
   const emit = (evt, data) => {
     if (events[evt]) {
       events[evt].forEach((cb) => cb(data));
     }
   };
 
-  return { on, emit };
+  return { on, off, emit };
 })();
