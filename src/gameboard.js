@@ -14,10 +14,13 @@ export function Gameboard() {
   );
 
   const placeShip = (ship, positions) => {
-    ship.setPositions(positions);
-    positions.forEach((coord) => (board[coord] = 1));
-    ships.push(ship);
-    return ship.getPositions();
+    const positionsAvailable = positions.every((pos) => board[pos] === null);
+    if (positionsAvailable) {
+      ship.setPositions(positions);
+      positions.forEach((coord) => (board[coord] = 1));
+      ships.push(ship);
+      return ship.getPositions();
+    }
   };
 
   const receiveAttack = (coordinates) => {
