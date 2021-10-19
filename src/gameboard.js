@@ -26,7 +26,12 @@ export function Gameboard() {
     } else if (board[coordinates] === 1) {
       board[coordinates] = -1;
       pubsub.emit("receivedAttack", coordinates);
+      ships.forEach((ship) => {
+        if (ship.isSunk()) {
+        }
+      });
     }
+    return board[coordinates];
   };
 
   const allShipsSunk = () => ships.every((ship) => ship.isSunk());

@@ -16,12 +16,12 @@ export function Ship(length) {
       shipPositions[pos] = { isHit: false };
     });
   };
-  const hit = (position) => {
+  const _hit = (position) => {
     if (Object.keys(shipPositions).includes(position)) {
       shipPositions[position].isHit = true;
     }
   };
-  pubsub.on("receivedAttack", hit);
+  pubsub.on("receivedAttack", _hit);
 
   const isSunk = () => {
     return Object.keys(shipPositions).every(
@@ -29,5 +29,5 @@ export function Ship(length) {
     );
   };
 
-  return { getLength, hit, getPositions, setPositions, isSunk };
+  return { getLength, getPositions, setPositions, isSunk };
 }
