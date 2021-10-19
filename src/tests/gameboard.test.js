@@ -15,7 +15,7 @@ it("creates a gameboard with 100 named coordinates", () => {
 });
 
 it("places the ship on the board", () => {
-  expect(Gameboard().placeShip(ship, ["A1", "A2"])).toEqual({
+  expect(gameBoard.placeShip(ship, ["A1", "A2"])).toEqual({
     A1: { isHit: false },
     A2: { isHit: false },
   });

@@ -1,3 +1,6 @@
+import { helpers } from "./help";
+
+console.log(helpers.x);
 export function Player() {
   const coordsAttacked = [];
 
@@ -26,7 +29,6 @@ export function Ai() {
       if (!coordsAttacked.includes(coordinates)) {
         ai.attack(enemyBoard, coordinates);
         coordsAttacked.push(coordinates);
-        console.log(coordinates);
         return coordinates;
       } else randomAttack(enemyBoard);
     },

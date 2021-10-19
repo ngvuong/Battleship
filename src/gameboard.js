@@ -13,13 +13,20 @@ export function Gameboard() {
     row.forEach((position) => (board[position] = null))
   );
 
-  const placeShip = (ship, positions) => {
+  const placeShip = (ship, positions = []) => {
     const positionsAvailable = positions.every((pos) => board[pos] === null);
-    if (positionsAvailable) {
-      ship.setPositions(positions);
-      positions.forEach((coord) => (board[coord] = 1));
-      ships.push(ship);
-      return ship.getPositions();
+    if (positions.length) {
+      if (positionsAvailable) {
+        ship.setPositions(positions);
+        positions.forEach((coord) => (board[coord] = 1));
+        ships.push(ship);
+        return ship.getPositions();
+      }
+    } else {
+      const shipLength = ship.getLength();
+      const xIndex = Math.floor(Math.random() * 10);
+      const yIndex = Math.floor(Math.random() * 10);
+      const headPosition = xCoord[xIndex] + yCoord[yIndex];
     }
   };
 
@@ -31,6 +38,7 @@ export function Gameboard() {
       pubsub.emit("receivedAttack", coordinates);
       ships.forEach((ship) => {
         if (ship.isSunk()) {
+          pubsub.emit("shipSunk", ship);
         }
       });
     }
