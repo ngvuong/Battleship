@@ -25,39 +25,31 @@ export function Gameboard() {
       }
     } else {
       const shipLength = ship.getLength();
-      let headPosition = utils.randomCoordinates();
+      const headPosition = utils.randomCoordinates();
       const orientation = Math.floor(Math.random() * 2);
       const direction = Math.floor(Math.random() * 2);
-      let dirOffset = direction === 0 ? -1 : 1;
-      let targetCoord = headPosition.split("")[orientation];
-      const coordBase = orientation === 0 ? xCoord : yCoord;
-      let positions = [];
+      const dirOffset = direction === 0 ? -1 : 1;
+      const targetCoord = headPosition.split("")[orientation];
+
+      const positions = [];
       positions[0] = headPosition;
-      console.log(headPosition);
-      let tries = 1;
 
       for (let i = 1; i < shipLength; i++) {
-        let index;
         if (orientation === 0) {
-          index = xCoord.indexOf(targetCoord);
-          positions[i] = xCoord[index + dirOffset] + headPosition.split("")[1];
+          const index = xCoord.indexOf(targetCoord);
+          positions[i] =
+            xCoord[index + dirOffset * i] + headPosition.split("")[1];
         } else {
-          index = yCoord.indexOf(parseInt(targetCoord));
-          positions[i] = headPosition.split("")[0] + yCoord[index + dirOffset];
-        }
-        index += dirOffset;
-        if (board[positions[i]] !== null) {
-          placeShip(ship);
-          // dirOffset *= -1;
-          // i = 1;
-          // if (tries === 0) {
-          //   headPosition = utils.randomCoordinates();
-          //   targetCoord = headPosition.split("")[orientation];
-          // } else tries--;
+          const index = yCoord.indexOf(parseInt(targetCoord));
+          positions[i] =
+            headPosition.split("")[0] + yCoord[index + dirOffset * i];
         }
       }
-      console.log(placeShip(ship, positions));
-      console.log(positions);
+
+      const allValid = positions.every((pos) => board[pos] !== undefined);
+      if (allValid) {
+        placeShip(ship, positions);
+      } else placeShip(ship);
     }
   };
 
