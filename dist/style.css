@@ -10,23 +10,40 @@ body {
 
 main {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   height: 100vh;
 }
 
 .player-board {
   display: grid;
+  grid-template-columns: repeat(11, 3.5rem);
+  width: min-content;
+  grid-gap: 1px;
+  /* border: 1px solid rgba(0, 0, 0, 0.5); */
+}
+
+.enemy-board {
+  display: none;
   grid-template-columns: repeat(10, 3.5rem);
   width: min-content;
-  /* height: 40vw; */
   grid-gap: 1px;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .square {
-  box-shadow: 0 0 0 1px black;
-  /* border: 1px solid black; */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   width: 3.5rem;
   height: 3.5rem;
+}
+
+.square:nth-child(-n + 11),
+.square:nth-child(11n + 1) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  box-shadow: none;
+  border: none;
 }

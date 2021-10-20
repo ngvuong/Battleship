@@ -1,15 +1,26 @@
+import { utils } from "./utils";
+
 export const Interface = (function () {
   const playerBoard = document.querySelector(".player-board");
   const enemyBoard = document.querySelector(".enemy-board");
 
-  for (let i = 0; i < 100; i++) {
-    const square = document.createElement("div");
-    square.className = "square";
-    // for (let j = 0; j < 10; j++) {
-    //   const square = document.createElement("div");
-    //   square.className = "square";
-    //   row.appendChild(square);
-    // }
-    playerBoard.appendChild(square);
+  for (let i = 0; i < 121; i++) {
+    const playerSquare = document.createElement("div");
+    playerSquare.className = "square";
+    playerBoard.appendChild(playerSquare);
+
+    const enemySquare = document.createElement("div");
+    enemySquare.className = "square";
+    enemyBoard.appendChild(enemySquare);
   }
+
+  const yLabels = utils.y;
+  let colLabels = [...document.querySelectorAll(".square:nth-child(-n+11")];
+  colLabels
+    .slice(1)
+    .forEach((label, i) => (label.textContent = yLabels[i] + 1));
+
+  const xLabels = utils.x;
+  let rowLabels = [...document.querySelectorAll(".square:nth-child(11n+1)")];
+  rowLabels.slice(1).forEach((label, i) => (label.textContent = xLabels[i]));
 })();
