@@ -21,6 +21,7 @@ export function Gameboard() {
         ship.setPositions(positions);
         positions.forEach((coord) => (board[coord] = 1));
         ships.push(ship);
+        pubsub.emit("shipPlaced", positions);
         return ship.getPositions();
       } else console.error("Invalid position");
     } else {

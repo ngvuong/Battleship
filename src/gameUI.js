@@ -1,4 +1,5 @@
 import { utils } from "./utils";
+import { pubsub } from "./pubsub";
 
 export const Interface = (function () {
   const playerBoard = document.querySelector(".player-board");
@@ -30,4 +31,11 @@ export const Interface = (function () {
     );
     row.forEach((sq, j) => (sq.className += ` ${xLabels[i] + yLabels[j]}`));
   }
+
+  const setSquares = (positions) => {
+    positions.forEach((pos) =>
+      document.querySelector(`.${pos}`).classList.add("occupied")
+    );
+  };
+  pubsub.on("shipPlaced", setSquares);
 })();

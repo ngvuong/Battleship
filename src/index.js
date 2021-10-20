@@ -5,9 +5,15 @@ import { Interface } from "./gameUI";
 
 (function GameController() {
   const gb = Gameboard();
-  const ship = Ship(5);
-  gb.placeShip(ship, ["A1", "B1", "C1", "D1", "E1"]);
-  const ship2 = Ship(5);
-  gb.placeShip(ship2);
+  const carrier = Ship(5);
+  const battleship = Ship(4);
+  const destroyer = Ship(3);
+  const submarine = Ship(3);
+  const patrolBoat = Ship(2);
+  gb.placeShip(carrier);
+  gb.placeShip(battleship);
+  gb.placeShip(destroyer);
+  gb.placeShip(submarine);
+  gb.placeShip(patrolBoat);
   console.log(gb.board);
 })();
