@@ -48,6 +48,6 @@ main {
   border: none;
 }
 
-.square:nth-child(n+(13+0)):nth-child(-n + 22) {
+.square.occupied {
   background-color: red;
 }
