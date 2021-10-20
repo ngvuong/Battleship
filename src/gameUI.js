@@ -23,4 +23,11 @@ export const Interface = (function () {
   const xLabels = utils.x;
   let rowLabels = [...document.querySelectorAll(".square:nth-child(11n+1)")];
   rowLabels.slice(1).forEach((label, i) => (label.textContent = xLabels[i]));
+
+  for (let i = 0; i < 10; i++) {
+    const row = document.querySelectorAll(
+      `.square:nth-child(n+${13 + 11 * i}):nth-child(-n+${22 + 11 * i})`
+    );
+    row.forEach((sq, j) => (sq.className += ` ${xLabels[i] + yLabels[j]}`));
+  }
 })();

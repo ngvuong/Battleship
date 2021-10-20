@@ -43,7 +43,11 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bolder;
+  font-weight: bold;
   box-shadow: none;
   border: none;
+}
+
+.square:nth-child(n+(13+0)):nth-child(-n + 22) {
+  background-color: red;
 }
