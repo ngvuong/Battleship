@@ -4,5 +4,6 @@ import { Player, Ai } from "./player";
 
 (function GameController() {
   const gb = Gameboard();
-  console.log(gb);
+  const ship = Ship(2);
+  gb.placeShip(ship);
 })();

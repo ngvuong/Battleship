@@ -1,6 +1,5 @@
-import { helpers } from "./help";
+import { utils } from "./utils";
 
-console.log(helpers.x);
 export function Player() {
   const coordsAttacked = [];
 
@@ -18,14 +17,10 @@ export function Player() {
 export function Ai() {
   const coordsAttacked = [];
   const ai = Player();
-  const x = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-  const y = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const attackingAi = {
     randomAttack: (enemyBoard) => {
-      const xIndex = Math.floor(Math.random() * 10);
-      const yIndex = Math.floor(Math.random() * 10);
-      const coordinates = x[xIndex] + y[yIndex];
+      const coordinates = utils.randomCoordinates();
       if (!coordsAttacked.includes(coordinates)) {
         ai.attack(enemyBoard, coordinates);
         coordsAttacked.push(coordinates);
