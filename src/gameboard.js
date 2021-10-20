@@ -33,29 +33,30 @@ export function Gameboard() {
       const coordBase = orientation === 0 ? xCoord : yCoord;
       let positions = [];
       positions[0] = headPosition;
+      console.log(headPosition);
       let tries = 1;
 
       for (let i = 1; i < shipLength; i++) {
+        let index;
         if (orientation === 0) {
-          const index = xCoord.indexOf(targetCoord);
-          positions[i] = xCoord[index + dirOffset] + headPosition.split(":")[1];
+          index = xCoord.indexOf(targetCoord);
+          positions[i] = xCoord[index + dirOffset] + headPosition.split("")[1];
         } else {
-          const index = yCoord.indexOf(targetCoord);
+          index = yCoord.indexOf(parseInt(targetCoord));
           positions[i] = headPosition.split("")[0] + yCoord[index + dirOffset];
         }
-        if (!board[positions[i]] || board[positions[i]] !== null) {
-          dirOffset *= -1;
-          i = 1;
-          if (tries === 0) {
-            headPosition = utils.randomCoordinates();
-            targetCoord = headPosition.split("")[orientation];
-          }
-          tries--;
-        } else {
-          console.log(positions);
-          placeShip(ship, positions);
+        index += dirOffset;
+        if (board[positions[i]] !== null) {
+          placeShip(ship);
+          // dirOffset *= -1;
+          // i = 1;
+          // if (tries === 0) {
+          //   headPosition = utils.randomCoordinates();
+          //   targetCoord = headPosition.split("")[orientation];
+          // } else tries--;
         }
       }
+      console.log(placeShip(ship, positions));
       console.log(positions);
     }
   };
