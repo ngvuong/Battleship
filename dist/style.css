@@ -1,0 +1,32 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.player-board {
+  display: grid;
+  grid-template-columns: repeat(10, 3.5rem);
+  width: min-content;
+  /* height: 40vw; */
+  grid-gap: 1px;
+  border: 1px solid black;
+}
+
+.square {
+  box-shadow: 0 0 0 1px black;
+  /* border: 1px solid black; */
+  width: 3.5rem;
+  height: 3.5rem;
+}

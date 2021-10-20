@@ -28,6 +28,5 @@ export function Ship(length) {
       (key) => shipPositions[key].isHit === true
     );
   };
-
   return { getLength, getPositions, setPositions, isSunk };
 }

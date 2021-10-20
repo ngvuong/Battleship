@@ -22,7 +22,7 @@ export function Gameboard() {
         positions.forEach((coord) => (board[coord] = 1));
         ships.push(ship);
         return ship.getPositions();
-      }
+      } else console.error("Invalid position");
     } else {
       const shipLength = ship.getLength();
       const headPosition = utils.randomCoordinates();
@@ -45,8 +45,7 @@ export function Gameboard() {
             headPosition.split("")[0] + yCoord[index + dirOffset * i];
         }
       }
-
-      const allValid = positions.every((pos) => board[pos] !== undefined);
+      const allValid = positions.every((pos) => board[pos] === null);
       if (allValid) {
         placeShip(ship, positions);
       } else placeShip(ship);
