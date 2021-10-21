@@ -1,7 +1,7 @@
 import { pubsub } from "./pubsub";
 import { utils } from "./utils";
 
-export function Gameboard() {
+export function Gameboard(type = "player") {
   const board = {};
   const ships = [];
 
@@ -21,7 +21,7 @@ export function Gameboard() {
         ship.setPositions(positions);
         positions.forEach((coord) => (board[coord] = 1));
         ships.push(ship);
-        pubsub.emit("shipPlaced", positions);
+        pubsub.emit("shipPlaced", { positions, type });
         return ship.getPositions();
       } else console.error("Invalid position");
     } else {
@@ -70,5 +70,5 @@ export function Gameboard() {
 
   const allShipsSunk = () => ships.every((ship) => ship.isSunk());
 
-  return { board, placeShip, receiveAttack, allShipsSunk };
+  return { board, ships, placeShip, receiveAttack, allShipsSunk };
 }
