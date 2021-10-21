@@ -65,9 +65,19 @@ export const Interface = (function () {
   };
   pubsub.on("shipPlaced", fillSquares);
 
-  const markAttack = (coordinates) => {
+  const markMiss = (data) => {
     document
-      .querySelector(`[data-position=${coordinates}]`)
-      .classList.add("attacked");
+      .querySelector(`.${data.type}[data-position=${data.coordinates}]`)
+      .classList.add("missed");
   };
+  pubsub.on("attackMissed", markMiss);
+
+  const markHit = (data) => {
+    const target = document.querySelector(
+      `.${data.type}[data-position=${data.coordinates}]`
+    );
+    target.classList.add("hit");
+    target.textContent = "X";
+  };
+  pubsub.on("attackHit", markHit);
 })();

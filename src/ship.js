@@ -16,9 +16,10 @@ export function Ship(length) {
       shipPositions[pos] = { isHit: false };
     });
   };
-  const _hit = (position) => {
-    if (Object.keys(shipPositions).includes(position)) {
-      shipPositions[position].isHit = true;
+  const _hit = (data) => {
+    if (Object.keys(shipPositions).includes(data.coordinates)) {
+      shipPositions[data.coordinates].isHit = true;
+      console.log(shipPositions[data.coordinates]);
     }
   };
   pubsub.on("attackHit", _hit);

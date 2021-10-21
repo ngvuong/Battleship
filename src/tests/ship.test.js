@@ -20,7 +20,7 @@ it("sets positions for the ship", () => {
 it("marks ship position as hit", () => {
   const ship = Ship(2);
   ship.setPositions(["A1", "B1"]);
-  pubsub.emit("receivedAttack", "A1");
+  pubsub.emit("attackHit", { coordinates: "A1", type: "player" });
   expect(ship.getPositions()).toEqual({
     A1: { isHit: true },
     B1: { isHit: false },
@@ -30,7 +30,7 @@ it("marks ship position as hit", () => {
 it("marks ship as sunk when all positions are hit", () => {
   const ship = Ship(2);
   ship.setPositions(["A1", "B1"]);
-  pubsub.emit("receivedAttack", "A1");
-  pubsub.emit("receivedAttack", "B1");
+  pubsub.emit("attackHit", { coordinates: "A1", type: "player" });
+  pubsub.emit("attackHit", { coordinates: "B1", type: "player" });
   expect(ship.isSunk()).toBe(true);
 });
