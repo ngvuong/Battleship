@@ -1,4 +1,5 @@
 import { utils } from "./utils";
+import { pubsub } from "./pubsub";
 
 export function Player() {
   const coordsAttacked = [];
@@ -6,6 +7,9 @@ export function Player() {
   const attack = (enemyBoard, coordinates) => {
     if (!coordsAttacked.includes(coordinates)) {
       const outcome = enemyBoard.receiveAttack(coordinates);
+      if (outcome === 0) {
+        pubsub.emit("attackMissed", { enemyBoard, coordinates });
+      } else pubsub.emit("attackHit", { enemyBoard, coordinates });
       coordsAttacked.push(coordinates);
       return outcome;
     }
@@ -25,7 +29,7 @@ export function Ai() {
         ai.attack(enemyBoard, coordinates);
         coordsAttacked.push(coordinates);
         return coordinates;
-      } else randomAttack(enemyBoard);
+      } else attackingAi.randomAttack(enemyBoard);
     },
   };
 

@@ -46,17 +46,41 @@ import { pubsub } from "./pubsub";
   let isGameOver = false;
   let turn = 1;
   const playerTurn = (Math.floor(Math.random() * 2) + 1) % 2;
-
+  console.log(playerTurn);
+  let isAttacking = true;
   const takeTurn = (player) => {
     if (player === humanPlayer) {
       player.attack();
     } else player.randomAttack();
   };
 
-  while (!isGameOver) {
-    if (turn % 2 === playerTurn) {
-      humanPlayer.attack(aiBoard);
-    } else takeTurn(ai);
-    turn++;
+  let coordinates;
+
+  if (isAttacking) {
+    const squares = document.querySelectorAll(".enemy.square");
+    squares.forEach((square) =>
+      square.addEventListener(
+        "click",
+        (e) => {
+          coordinates = e.target.dataset.position;
+          console.log(humanPlayer.attack(aiBoard, coordinates));
+        },
+        true
+      )
+    );
   }
+
+  function logit() {
+    console.log(coordinates);
+  }
+
+  // // while (!isGameOver) {
+  // if (turn % 2 === playerTurn) {
+  //   isAttacking = !isAttacking;
+  //   console.log(humanPlayer.attack(aiBoard, coordinates));
+  //   isAttacking = false;
+  // } else console.log("not");
+  // console.log("took turn");
+  // turn++;
+  // }
 })();

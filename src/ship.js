@@ -21,7 +21,7 @@ export function Ship(length) {
       shipPositions[position].isHit = true;
     }
   };
-  pubsub.on("receivedAttack", _hit);
+  pubsub.on("attackHit", _hit);
 
   const isSunk = () => {
     return Object.keys(shipPositions).every(

@@ -56,12 +56,15 @@ export function Gameboard(type = "player") {
   const receiveAttack = (coordinates) => {
     if (board[coordinates] === null) {
       board[coordinates] = 0;
+      // pubsub.emit("attackMissed", coordinates);
     } else if (board[coordinates] === 1) {
       board[coordinates] = -1;
-      pubsub.emit("receivedAttack", coordinates);
+      // pubsub.emit("attackHit", coordinates);
       ships.forEach((ship) => {
         if (ship.isSunk()) {
+          ships.splice(ships.indexOf(ship), 1);
           pubsub.emit("shipSunk", ship);
+          console.log("ship sunk");
         }
       });
     }

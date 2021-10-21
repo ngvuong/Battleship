@@ -48,18 +48,26 @@ export const Interface = (function () {
     const row = document.querySelectorAll(
       `.square:nth-child(n+${13 + 11 * i}):nth-child(-n+${22 + 11 * i})`
     );
-    row.forEach(
-      (sq, j) => (sq.className += ` ${xLabels[i] + yLabels[j % 10]}`)
+    row.forEach((sq, j) =>
+      sq.setAttribute("data-position", `${xLabels[i] + yLabels[j % 10]}`)
     );
   }
 
   const fillSquares = (data) => {
     const positions = data.positions;
-    if (data.type === "player") {
+    if (data.type) {
       positions.forEach((pos) =>
-        document.querySelector(`.player.${pos}`).classList.add("occupied")
+        document
+          .querySelector(`.${data.type}[data-position =${pos}]`)
+          .classList.add("occupied")
       );
     }
   };
   pubsub.on("shipPlaced", fillSquares);
+
+  const markAttack = (coordinates) => {
+    document
+      .querySelector(`[data-position=${coordinates}]`)
+      .classList.add("attacked");
+  };
 })();
