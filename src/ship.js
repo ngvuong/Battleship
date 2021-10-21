@@ -19,7 +19,6 @@ export function Ship(length) {
   const _hit = (data) => {
     if (Object.keys(shipPositions).includes(data.coordinates)) {
       shipPositions[data.coordinates].isHit = true;
-      console.log(shipPositions[data.coordinates]);
     }
   };
   pubsub.on("attackHit", _hit);
