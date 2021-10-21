@@ -10,9 +10,24 @@ body {
 
 main {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   height: 100vh;
+}
+
+.config {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  position: relative;
+  width: 30vw;
+  height: calc(3.5rem * 11 + 10px);
+}
+
+.random-btn {
+  position: absolute;
+  bottom: 0;
 }
 
 .player-board {

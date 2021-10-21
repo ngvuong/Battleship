@@ -4,6 +4,13 @@ import { pubsub } from "./pubsub";
 export const Interface = (function () {
   const playerBoard = document.querySelector(".player-board");
   const enemyBoard = document.querySelector(".enemy-board");
+  const randomBtn = document.querySelector(".random-btn");
+  randomBtn.addEventListener("click", () => {
+    document
+      .querySelectorAll(".occupied")
+      .forEach((el) => el.classList.remove("occupied"));
+    pubsub.emit("randomized", null);
+  });
 
   for (let i = 0; i < 121; i++) {
     const playerSquare = document.createElement("div");
