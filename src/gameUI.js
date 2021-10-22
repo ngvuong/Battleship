@@ -31,14 +31,21 @@ export const Interface = (function () {
         `.${boardClassName} .square:nth-child(-n+11`
       ),
     ];
-    colLabels.slice(1).forEach((label, i) => (label.textContent = yLabels[i]));
+    colLabels.slice(1).forEach((label, i) => {
+      label.className = "label";
+      label.textContent = yLabels[i];
+    });
 
     let rowLabels = [
       ...document.querySelectorAll(
         `.${boardClassName} .square:nth-child(11n+1)`
       ),
     ];
-    rowLabels.slice(1).forEach((label, i) => (label.textContent = xLabels[i]));
+    rowLabels[0].className = "label";
+    rowLabels.slice(1).forEach((label, i) => {
+      label.className = "label";
+      label.textContent = xLabels[i];
+    });
   };
 
   labelBoard("player-board");
@@ -81,16 +88,27 @@ export const Interface = (function () {
   };
   pubsub.on("attackHit", markHit);
 
-  const getPosition = (e) => {
+  const setPosition = (e) => {
     const position = e.target.dataset.position;
     pubsub.emit("attackLaunched", position);
   };
   const squares = document.querySelectorAll(".enemy.square");
   squares.forEach((sq) =>
-    sq.addEventListener("click", getPosition, { once: true })
+    sq.addEventListener("click", setPosition, { once: true })
   );
 
   document.querySelector(".start-btn").addEventListener("click", () => {
     document.querySelector("main").classList.add("start");
   });
+})();
+
+export const dragAndDrop = (function () {
+  function handleDragStart(e) {
+    this.style.opacity = "0.4";
+
+    dragSrcEl = this;
+
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", this.innerHTML);
+  }
 })();
