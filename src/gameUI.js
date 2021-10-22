@@ -80,4 +80,13 @@ export const Interface = (function () {
     target.textContent = "X";
   };
   pubsub.on("attackHit", markHit);
+
+  const getPosition = (e) => {
+    const position = e.target.dataset.position;
+    pubsub.emit("attackLaunched", position);
+  };
+  const squares = document.querySelectorAll(".enemy.square");
+  squares.forEach((sq) =>
+    sq.addEventListener("click", getPosition, { once: true })
+  );
 })();

@@ -54,15 +54,20 @@ import { pubsub } from "./pubsub";
   const play = (e) => {
     coordinates = e.target.dataset.position;
     console.log(humanPlayer.attack(aiBoard, coordinates));
+    turn++;
     takeTurn();
   };
 
-  const takeTurn = () => {
+  const takeTurn = (coordinates = null) => {
     if (!isGameOver) {
+      console.log("turn" + turn);
       if (turn % 2 === playerTurn) {
-        const squares = document.querySelectorAll(".enemy.square");
-        squares.forEach((square) => square.addEventListener("click", play));
-        turn++;
+        if (coordinates) {
+          // const coordinates = e.target.dataset.position;
+          humanPlayer.attack(aiBoard, coordinates);
+          turn++;
+          takeTurn();
+        }
       } else {
         ai.randomAttack(playerBoard);
         turn++;
@@ -71,6 +76,11 @@ import { pubsub } from "./pubsub";
     }
   };
   takeTurn();
+  pubsub.on("attackLaunched", takeTurn);
+  // const squares = document.querySelectorAll(".enemy.square");
+  // squares.forEach((sq) =>
+  //   sq.addEventListener("click", takeTurn, { once: true })
+  // );
 
   const announce = (ship) => {};
   pubsub.on("shipSunk", announce);
