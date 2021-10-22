@@ -30,10 +30,17 @@ main.start {
   align-items: center;
   position: relative;
   width: 30vw;
-  height: calc(3.5rem * 11 + 10px);
+  height: calc(3vw * 11 + 10px);
   /* transform: translateX(-100%); */
   /* position: absolute;
   left: -15%; */
+}
+
+.ship {
+  width: 5vw;
+  height: 2.5vw;
+  background-color: red;
+  border: 1px solid black;
 }
 
 .start-btn {
@@ -82,8 +89,7 @@ main.start {
   height: 2.5vw;
 }
 
-.square:nth-child(-n + 11),
-.square:nth-child(11n + 1) {
+.label {
   display: flex;
   align-items: center;
   justify-content: center;
