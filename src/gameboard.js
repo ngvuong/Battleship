@@ -63,7 +63,7 @@ export function Gameboard(type = "player") {
       ships.forEach((ship) => {
         if (ship.isSunk()) {
           ships.splice(ships.indexOf(ship), 1);
-          pubsub.emit("shipSunk", ship);
+          pubsub.emit("shipSunk", { ship, type });
           console.log("ship sunk");
         }
       });

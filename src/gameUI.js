@@ -89,4 +89,8 @@ export const Interface = (function () {
   squares.forEach((sq) =>
     sq.addEventListener("click", getPosition, { once: true })
   );
+
+  document.querySelector(".start-btn").addEventListener("click", () => {
+    document.querySelector("main").classList.add("start");
+  });
 })();
