@@ -6,6 +6,7 @@
 
 body {
   margin: 0;
+  overflow: hidden;
 }
 
 main {
@@ -13,6 +14,13 @@ main {
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
+  width: max-content;
+  transform: translateX(5%);
+  transition: all 0.5s ease-in;
+}
+
+main.start {
+  transform: translateX(-23%);
 }
 
 .config {
@@ -23,6 +31,15 @@ main {
   position: relative;
   width: 30vw;
   height: calc(3.5rem * 11 + 10px);
+  /* transform: translateX(-100%); */
+  /* position: absolute;
+  left: -15%; */
+}
+
+.start-btn {
+  position: absolute;
+  right: 0;
+  top: 45%;
 }
 
 .random-btn {
@@ -32,7 +49,7 @@ main {
 
 .boards {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100vw;
 }
 
@@ -41,6 +58,7 @@ main {
   grid-template-columns: repeat(11, 2.5vw);
   width: min-content;
   grid-gap: 1px;
+  margin-left: 5%;
   /* border: 1px solid rgba(0, 0, 0, 0.5); */
 }
 
@@ -49,6 +67,7 @@ main {
   grid-template-columns: repeat(11, 2.5vw);
   width: min-content;
   grid-gap: 1px;
+  margin-right: 5%;
   /* border: 1px solid rgba(0, 0, 0, 0.5); */
 }
 
