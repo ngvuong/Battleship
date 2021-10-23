@@ -103,12 +103,43 @@ export const Interface = (function () {
 })();
 
 export const dragAndDrop = (function () {
+  let dragSrcEl;
   function handleDragStart(e) {
-    this.style.opacity = "0.4";
+    // this.style.opacity = "0.4";
 
     dragSrcEl = this;
 
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text/html", this.innerHTML);
   }
+
+  function handleDrop(e) {
+    e.stopPropagation();
+
+    if (dragSrcEl !== this) {
+      dragSrcEl.outerHTML = this.innerHTML;
+      this.innerHTML = e.dataTransfer.getData("text/html");
+    }
+
+    return false;
+  }
+  function handleDragOver(e) {
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
+
+    return false;
+  }
+
+  const ships = document.querySelectorAll(".ship");
+  ships.forEach((ship) => {
+    ship.addEventListener("dragstart", handleDragStart);
+    ship.addEventListener("dragover", handleDragOver);
+  });
+
+  const squares = document.querySelectorAll(".player.square");
+  squares.forEach((square) => {
+    square.addEventListener("drop", handleDrop);
+    square.addEventListener("dragover", handleDragOver);
+  });
 })();

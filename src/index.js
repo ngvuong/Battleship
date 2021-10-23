@@ -1,7 +1,7 @@
 import { Ship } from "./ship";
 import { Gameboard } from "./gameboard";
 import { Player, Ai } from "./player";
-import { Interface } from "./gameUI";
+import { Interface, dragAndDrop } from "./gameUI";
 import { pubsub } from "./pubsub";
 
 (function GameController() {
