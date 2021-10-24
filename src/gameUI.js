@@ -142,4 +142,7 @@ export const dragAndDrop = (function () {
     square.addEventListener("drop", handleDrop);
     square.addEventListener("dragover", handleDragOver);
   });
+
+  const playerBoard = document.querySelector(".player-board");
+  playerBoard.addEventListener("drop", handleDrop);
 })();
