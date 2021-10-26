@@ -110,15 +110,19 @@ export const dragAndDrop = (function () {
     dragSrcEl = this;
 
     e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/html", this.innerHTML);
+    e.dataTransfer.setData("text/html", this.id);
   }
 
   function handleDrop(e) {
-    e.stopPropagation();
+    // e.stopPropagation();
 
     if (dragSrcEl !== this) {
-      dragSrcEl.outerHTML = this.innerHTML;
-      this.innerHTML = e.dataTransfer.getData("text/html");
+      // dragSrcEl.innerHTML = this.innerHTML;
+      // this.innerHTML = e.dataTransfer.getData("text/html");
+      console.log(e.dataTransfer.getData("text/html"));
+      const shipId = e.dataTransfer.getData("text/html");
+      const ship = document.getElementById(shipId);
+      this.appendChild(ship);
     }
 
     return false;
@@ -137,12 +141,17 @@ export const dragAndDrop = (function () {
     ship.addEventListener("dragover", handleDragOver);
   });
 
-  const squares = document.querySelectorAll(".player.square");
-  squares.forEach((square) => {
-    square.addEventListener("drop", handleDrop);
-    square.addEventListener("dragover", handleDragOver);
-  });
+  const carrier = document.querySelector(".carrier");
+  carrier.addEventListener("dragstart", handleDragStart);
+  carrier.addEventListener("dragover", handleDragOver);
+
+  // const squares = document.querySelectorAll(".player.square");
+  // squares.forEach((square) => {
+  //   square.addEventListener("drop", handleDrop);
+  //   square.addEventListener("dragover", handleDragOver);
+  // });
 
   const playerBoard = document.querySelector(".player-board");
   playerBoard.addEventListener("drop", handleDrop);
+  playerBoard.addEventListener("dragover", handleDragOver);
 })();
