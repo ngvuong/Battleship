@@ -105,58 +105,52 @@ export const Interface = (function () {
 })();
 
 export const dragAndDrop = (function () {
-  let dragSrcEl;
+  // let dragSrcEl;
   let selectedPartId;
 
   function handleDragStart(e) {
-    // this.style.opacity = "0.4";
-
-    dragSrcEl = this;
-
     e.dataTransfer.effectAllowed = "move";
-    // e.dataTransfer.setData("text/html", shipPart);
   }
 
   function handleDrop(e) {
     // e.stopPropagation();
 
-    if (dragSrcEl !== this) {
-      // dragSrcEl.innerHTML = this.innerHTML;
-      // this.innerHTML = e.dataTransfer.getData("text/html");
-      // console.log(e.dataTransfer.getData("text/html"));
-      // const shipId = e.dataTransfer.getData("text/html");
-      const selectedPart = document.getElementById(selectedPartId);
-      const shipLength = selectedPart.parentNode.children.length;
-      console.log(shipLength);
-      const offset = selectedPartId.substr(-1);
-      const currentPos = this.dataset.position;
-      const headPosition =
-        currentPos.substr(0, 1) + (parseInt(currentPos.substr(-1)) - offset);
-      // console.log(headPosition);
-      const headNode = document.querySelector(
-        `[data-position=${headPosition}]`
-      );
-      // console.log(this);
-      if (headNode) {
-        // const id = ship.parentNode.id + "-0";
-        // const headPart = document.getElementById(id);
-        // console.log(id);
-        // this.appendChild(ship);
-        // headNode.appendChild(headPart);
-        const shipId = selectedPart.parentNode.id;
-        for (let i = 0; i < shipLength; i++) {
-          const node = document.querySelector(
-            `[data-position=${
-              headPosition.substr(0, 1) +
-              (parseInt(headPosition.substr(-1)) + i)
-            }]`
-          );
-          const partId = `${shipId}-${i}`;
-          const part = document.getElementById(partId);
-          // console.log(part);
+    // dragSrcEl.innerHTML = this.innerHTML;
+    // this.innerHTML = e.dataTransfer.getData("text/html");
+    // console.log(e.dataTransfer.getData("text/html"));
+    // const shipId = e.dataTransfer.getData("text/html");
+    const selectedPart = document.getElementById(selectedPartId);
+    const shipLength = selectedPart.parentNode.children.length;
+    console.log(shipLength);
+    const offset = selectedPartId.substr(-1);
+    const currentPos = this.dataset.position;
+    const headPosition =
+      currentPos.substr(0, 1) + (parseInt(currentPos.substr(-1)) - offset);
+    // console.log(headPosition);
+    const headNode = document.querySelector(`[data-position=${headPosition}]`);
+    // console.log(this);
+    if (headNode) {
+      // const id = ship.parentNode.id + "-0";
+      // const headPart = document.getElementById(id);
+      // console.log(id);
+      // this.appendChild(ship);
+      // headNode.appendChild(headPart);
+      const shipId = selectedPart.parentNode.id;
+      for (let i = 0; i < shipLength; i++) {
+        const node = document.querySelector(
+          `[data-position=${
+            headPosition.substr(0, 1) + (parseInt(headPosition.substr(-1)) + i)
+          }]`
+        );
+        const partId = `${shipId}-${i}`;
+        const part = document.getElementById(partId);
+        // console.log(part);
+        if (part) {
           node.appendChild(part);
         }
       }
+      // const ship = document.getElementById(shipId);
+      // document.querySelector(".fleet").removeChild(ship);
     }
 
     return false;
@@ -172,7 +166,7 @@ export const dragAndDrop = (function () {
   const fleet = document.querySelectorAll(".fleet > div");
   console.log(fleet);
   fleet.forEach((ship) => {
-    ship.addEventListener("dragstart", handleDragStart);
+    // ship.addEventListener("dragstart", handleDragStart);
     ship.addEventListener("dragover", handleDragOver);
     ship.childNodes.forEach((node) =>
       node.addEventListener("mousedown", (e) => (selectedPartId = e.target.id))
@@ -181,8 +175,8 @@ export const dragAndDrop = (function () {
 
   const squares = document.querySelectorAll(".player.square");
   squares.forEach((square) => {
-    square.addEventListener("drop", handleDrop);
     square.addEventListener("dragover", handleDragOver);
+    square.addEventListener("drop", handleDrop);
   });
 
   // const playerBoard = document.querySelector(".player-board");
