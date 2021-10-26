@@ -54,7 +54,7 @@ main.start {
   height: 2.5vw;
   background-color: red;
   border: 1px solid black;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .start-btn {
