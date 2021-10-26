@@ -104,6 +104,8 @@ export const Interface = (function () {
 
 export const dragAndDrop = (function () {
   let dragSrcEl;
+  let shipPart;
+
   function handleDragStart(e) {
     // this.style.opacity = "0.4";
 
@@ -122,7 +124,18 @@ export const dragAndDrop = (function () {
       console.log(e.dataTransfer.getData("text/html"));
       const shipId = e.dataTransfer.getData("text/html");
       const ship = document.getElementById(shipId);
-      this.appendChild(ship);
+      const offset = shipPart.substr(-1);
+      const currentPos = this.dataset.position;
+      const headPosition =
+        currentPos.substr(0, 1) + (parseInt(currentPos.substr(-1)) - offset);
+      console.log(headPosition);
+      const headNode = document.querySelector(
+        `[data-position=${headPosition}]`
+      );
+      console.log(headNode);
+      if (headNode) {
+        this.appendChild(ship);
+      }
     }
 
     return false;
@@ -135,23 +148,20 @@ export const dragAndDrop = (function () {
     return false;
   }
 
-  const ships = document.querySelectorAll(".ship");
-  ships.forEach((ship) => {
-    ship.addEventListener("dragstart", handleDragStart);
-    ship.addEventListener("dragover", handleDragOver);
-  });
-
   const carrier = document.querySelector(".carrier");
+  carrier.childNodes.forEach((node) =>
+    node.addEventListener("mousedown", (e) => (shipPart = e.target.id))
+  );
   carrier.addEventListener("dragstart", handleDragStart);
   carrier.addEventListener("dragover", handleDragOver);
 
-  // const squares = document.querySelectorAll(".player.square");
-  // squares.forEach((square) => {
-  //   square.addEventListener("drop", handleDrop);
-  //   square.addEventListener("dragover", handleDragOver);
-  // });
+  const squares = document.querySelectorAll(".player.square");
+  squares.forEach((square) => {
+    square.addEventListener("drop", handleDrop);
+    square.addEventListener("dragover", handleDragOver);
+  });
 
-  const playerBoard = document.querySelector(".player-board");
-  playerBoard.addEventListener("drop", handleDrop);
-  playerBoard.addEventListener("dragover", handleDragOver);
+  // const playerBoard = document.querySelector(".player-board");
+  // playerBoard.addEventListener("drop", handleDrop);
+  // playerBoard.addEventListener("dragover", handleDragOver);
 })();

@@ -36,8 +36,12 @@ main.start {
   left: -15%; */
 }
 
+.carrier {
+  display: flex;
+}
+
 .ship {
-  width: 5vw;
+  width: 2.5vw;
   height: 2.5vw;
   background-color: red;
   border: 1px solid black;

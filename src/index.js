@@ -22,7 +22,7 @@ import { pubsub } from "./pubsub";
     playerBoard.placeShip(submarine);
     playerBoard.placeShip(patrolBoat);
   };
-  randomizePlacement();
+  // randomizePlacement();
   pubsub.on("randomized", randomizePlacement);
 
   // Ai board
