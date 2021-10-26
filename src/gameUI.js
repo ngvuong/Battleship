@@ -58,6 +58,8 @@ export const Interface = (function () {
     row.forEach((sq, j) =>
       sq.setAttribute("data-position", `${xLabels[i] + yLabels[j % 10]}`)
     );
+
+    row.forEach((sq, j) => sq.setAttribute("data-index", `${i * 10 + j + 1}`));
   }
 
   const fillSquares = (data) => {
@@ -104,7 +106,7 @@ export const Interface = (function () {
 
 export const dragAndDrop = (function () {
   let dragSrcEl;
-  let shipPart;
+  let selectedPartId;
 
   function handleDragStart(e) {
     // this.style.opacity = "0.4";
@@ -112,7 +114,7 @@ export const dragAndDrop = (function () {
     dragSrcEl = this;
 
     e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/html", this.id);
+    // e.dataTransfer.setData("text/html", shipPart);
   }
 
   function handleDrop(e) {
@@ -121,10 +123,10 @@ export const dragAndDrop = (function () {
     if (dragSrcEl !== this) {
       // dragSrcEl.innerHTML = this.innerHTML;
       // this.innerHTML = e.dataTransfer.getData("text/html");
-      console.log(e.dataTransfer.getData("text/html"));
-      const shipId = e.dataTransfer.getData("text/html");
-      const ship = document.getElementById(shipId);
-      const offset = shipPart.substr(-1);
+      // console.log(e.dataTransfer.getData("text/html"));
+      // const shipId = e.dataTransfer.getData("text/html");
+      const selectedPart = document.getElementById(selectedPartId);
+      const offset = selectedPartId.substr(-1);
       const currentPos = this.dataset.position;
       const headPosition =
         currentPos.substr(0, 1) + (parseInt(currentPos.substr(-1)) - offset);
@@ -132,9 +134,26 @@ export const dragAndDrop = (function () {
       const headNode = document.querySelector(
         `[data-position=${headPosition}]`
       );
-      console.log(headNode);
+      console.log(this);
       if (headNode) {
-        this.appendChild(ship);
+        // const id = ship.parentNode.id + "-0";
+        // const headPart = document.getElementById(id);
+        // console.log(id);
+        // this.appendChild(ship);
+        // headNode.appendChild(headPart);
+        const shipId = selectedPart.parentNode.id;
+        for (let i = 0; i < 5; i++) {
+          const node = document.querySelector(
+            `[data-position=${
+              headPosition.substr(0, 1) +
+              (parseInt(headPosition.substr(-1)) + i)
+            }]`
+          );
+          const partId = `${shipId}-${i}`;
+          const part = document.getElementById(partId);
+          console.log(part);
+          node.appendChild(part);
+        }
       }
     }
 
@@ -150,7 +169,7 @@ export const dragAndDrop = (function () {
 
   const carrier = document.querySelector(".carrier");
   carrier.childNodes.forEach((node) =>
-    node.addEventListener("mousedown", (e) => (shipPart = e.target.id))
+    node.addEventListener("mousedown", (e) => (selectedPartId = e.target.id))
   );
   carrier.addEventListener("dragstart", handleDragStart);
   carrier.addEventListener("dragover", handleDragOver);
