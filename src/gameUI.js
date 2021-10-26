@@ -126,15 +126,17 @@ export const dragAndDrop = (function () {
       // console.log(e.dataTransfer.getData("text/html"));
       // const shipId = e.dataTransfer.getData("text/html");
       const selectedPart = document.getElementById(selectedPartId);
+      const shipLength = selectedPart.parentNode.children.length;
+      console.log(shipLength);
       const offset = selectedPartId.substr(-1);
       const currentPos = this.dataset.position;
       const headPosition =
         currentPos.substr(0, 1) + (parseInt(currentPos.substr(-1)) - offset);
-      console.log(headPosition);
+      // console.log(headPosition);
       const headNode = document.querySelector(
         `[data-position=${headPosition}]`
       );
-      console.log(this);
+      // console.log(this);
       if (headNode) {
         // const id = ship.parentNode.id + "-0";
         // const headPart = document.getElementById(id);
@@ -142,7 +144,7 @@ export const dragAndDrop = (function () {
         // this.appendChild(ship);
         // headNode.appendChild(headPart);
         const shipId = selectedPart.parentNode.id;
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < shipLength; i++) {
           const node = document.querySelector(
             `[data-position=${
               headPosition.substr(0, 1) +
@@ -151,7 +153,7 @@ export const dragAndDrop = (function () {
           );
           const partId = `${shipId}-${i}`;
           const part = document.getElementById(partId);
-          console.log(part);
+          // console.log(part);
           node.appendChild(part);
         }
       }
@@ -167,12 +169,15 @@ export const dragAndDrop = (function () {
     return false;
   }
 
-  const carrier = document.querySelector(".carrier");
-  carrier.childNodes.forEach((node) =>
-    node.addEventListener("mousedown", (e) => (selectedPartId = e.target.id))
-  );
-  carrier.addEventListener("dragstart", handleDragStart);
-  carrier.addEventListener("dragover", handleDragOver);
+  const fleet = document.querySelectorAll(".fleet > div");
+  console.log(fleet);
+  fleet.forEach((ship) => {
+    ship.addEventListener("dragstart", handleDragStart);
+    ship.addEventListener("dragover", handleDragOver);
+    ship.childNodes.forEach((node) =>
+      node.addEventListener("mousedown", (e) => (selectedPartId = e.target.id))
+    );
+  });
 
   const squares = document.querySelectorAll(".player.square");
   squares.forEach((square) => {
