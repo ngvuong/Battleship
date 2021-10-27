@@ -50,7 +50,6 @@ main.start {
   display: flex;
   width: min-content;
   cursor: move;
-  background-color: blue;
 }
 
 .ship.vertical {
@@ -62,7 +61,9 @@ main.start {
   width: 2.5vw;
   height: 2.5vw;
   background-color: red;
-  border: 1px solid black;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+
+  /* border: 1px solid black; */
   /* z-index: 1; */
 }
 
@@ -72,7 +73,10 @@ main.start {
   top: 45%;
 }
 
-.random-btn {
+.config-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   position: absolute;
   bottom: 0;
 }
@@ -123,7 +127,7 @@ main.start {
 }
 
 .square.occupied {
-  background-color: yellow;
+  background-color: red;
 }
 
 .square.missed {

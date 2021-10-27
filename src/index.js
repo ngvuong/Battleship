@@ -13,6 +13,21 @@ import { pubsub } from "./pubsub";
   const submarine = Ship(3);
   const patrolBoat = Ship(2);
 
+  const positionShip = (positions) => {
+    if (positions.length === 5) {
+      playerBoard.placeShip(carrier, positions);
+    } else if (positions.length === 4) {
+      playerBoard.placeShip(battleship, positions);
+    } else if (positions.length === 3) {
+      if (Object.keys(destroyer.getPositions()).length === 0) {
+        playerBoard.placeShip(destroyer, positions);
+      } else playerBoard.placeShip(submarine, positions);
+    } else if (positions.length === 2) {
+      playerBoard.placeShip(patrolBoat, positions);
+    }
+  };
+  pubsub.on("shipPositioned", positionShip);
+
   const randomizePlacement = () => {
     playerBoard = Gameboard();
 
@@ -24,6 +39,11 @@ import { pubsub } from "./pubsub";
   };
   // randomizePlacement();
   pubsub.on("randomized", randomizePlacement);
+
+  // const resetBoard = () => {
+  //   playerBoard = Gameboard();
+  // };
+  // pubsub.on("boardReset", resetBoard);
 
   // Ai board
   const aiBoard = Gameboard("enemy");

@@ -4,8 +4,30 @@ import { pubsub } from "./pubsub";
 export const Interface = (function () {
   const playerBoard = document.querySelector(".player-board");
   const enemyBoard = document.querySelector(".enemy-board");
+
+  // let fleetHtml;
+  // window.addEventListener(
+  //   "load",
+  //   () => (fleetHtml = document.querySelector(".fleet").outerHTML)
+  // );
+
+  // const resetBtn = document.querySelector(".reset-btn");
+  // resetBtn.addEventListener("click", () => {
+  //   document.querySelector(".fleet").outerHTML = fleetHtml;
+  //   document
+  //     .querySelectorAll(".occupied")
+  //     .forEach((el) => el.classList.remove("occupied"));
+  //   document.querySelectorAll(".square .ship-part").forEach((part) => {
+  //     part.parentNode.removeChild(part);
+  //   });
+  // });
+
   const randomBtn = document.querySelector(".random-btn");
   randomBtn.addEventListener("click", () => {
+    document.querySelectorAll(".square .ship-part").forEach((part) => {
+      part.parentNode.removeChild(part);
+    });
+
     document
       .querySelectorAll(".occupied")
       .forEach((el) => el.classList.remove("occupied"));
@@ -57,10 +79,6 @@ export const Interface = (function () {
     );
     row.forEach((sq, j) =>
       sq.setAttribute("data-position", `${xLabels[i] + yLabels[j % 10]}`)
-    );
-
-    row.forEach((sq, j) =>
-      sq.setAttribute("data-index", `${i}-${i * 10 + j + 1}`)
     );
   }
 
@@ -119,11 +137,13 @@ export const dragAndDrop = (function () {
 
   function handleDragStart(e) {
     e.dataTransfer.effectAllowed = "move";
+    console.log(selectedPartId);
   }
 
   function handleDrop(e) {
-    e.preventDefault();
+    // e.preventDefault();
     const selectedPart = document.getElementById(selectedPartId);
+    console.log(selectedPartId);
     const shipLength = selectedPart.parentNode.children.length;
     const offset = selectedPartId.substr(-1);
     const currentPos = this.dataset.position;
@@ -145,13 +165,11 @@ export const dragAndDrop = (function () {
         nodeList.push(node);
         partList.push(part);
       }
-      console.log(nodeList);
     } else {
       const xCoord = utils.x;
       const currentPositionRowIndex = xCoord.indexOf(currentPos.substr(0, 1));
       const headPositionRowIndex = currentPositionRowIndex - offset;
       const headPositionCol = currentPos.substr(-1);
-      console.log(headPositionRowIndex);
 
       for (let i = 0; i < shipLength; i++) {
         const row = xCoord[headPositionRowIndex + i];
@@ -173,8 +191,7 @@ export const dragAndDrop = (function () {
         }
       });
       const positions = nodeList.map((node) => node.dataset.position);
-      console.log(positions);
-      pubsub.emit("shipPlaced", nodeList);
+      pubsub.emit("shipPositioned", positions);
     }
 
     return false;
@@ -187,13 +204,47 @@ export const dragAndDrop = (function () {
     // return false;
   }
 
-  const ships = document.querySelectorAll(".ship ");
+  const ships = document.querySelectorAll(".ship");
   ships.forEach((ship) => {
     ship.addEventListener("dragstart", handleDragStart);
     ship.addEventListener("dragover", handleDragOver);
     ship.childNodes.forEach((node) =>
       node.addEventListener("mousedown", (e) => (selectedPartId = e.target.id))
     );
+  });
+  let fleetHtml;
+  window.addEventListener(
+    "load",
+    () => (fleetHtml = document.querySelector(".fleet").outerHTML)
+  );
+
+  const resetBtn = document.querySelector(".reset-btn");
+  resetBtn.addEventListener("click", () => {
+    document.querySelector(".fleet").outerHTML = fleetHtml;
+    document
+      .querySelectorAll(".occupied")
+      .forEach((el) => el.classList.remove("occupied"));
+    document.querySelectorAll(".square .ship-part").forEach((part) => {
+      part.parentNode.removeChild(part);
+    });
+    const ships = document.querySelectorAll(".ship");
+    ships.forEach((ship) => {
+      ship.addEventListener("dragstart", handleDragStart);
+      ship.addEventListener("dragover", handleDragOver);
+      ship.childNodes.forEach((node) =>
+        node.addEventListener(
+          "mousedown",
+          (e) => (selectedPartId = e.target.id)
+        )
+      );
+    });
+    // pubsub.emit("boardReset", null);
+
+    const squares = document.querySelectorAll(".player.square");
+    squares.forEach((square) => {
+      square.addEventListener("dragover", handleDragOver);
+      square.addEventListener("drop", handleDrop);
+    });
   });
 
   const squares = document.querySelectorAll(".player.square");
