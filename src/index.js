@@ -40,10 +40,10 @@ import { pubsub } from "./pubsub";
   // randomizePlacement();
   pubsub.on("randomized", randomizePlacement);
 
-  // const resetBoard = () => {
-  //   playerBoard = Gameboard();
-  // };
-  // pubsub.on("boardReset", resetBoard);
+  const resetBoard = () => {
+    playerBoard = Gameboard();
+  };
+  pubsub.on("boardReset", resetBoard);
 
   // Ai board
   const aiBoard = Gameboard("enemy");

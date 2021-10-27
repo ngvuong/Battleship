@@ -5,28 +5,13 @@ export const Interface = (function () {
   const playerBoard = document.querySelector(".player-board");
   const enemyBoard = document.querySelector(".enemy-board");
 
-  // let fleetHtml;
-  // window.addEventListener(
-  //   "load",
-  //   () => (fleetHtml = document.querySelector(".fleet").outerHTML)
-  // );
-
-  // const resetBtn = document.querySelector(".reset-btn");
-  // resetBtn.addEventListener("click", () => {
-  //   document.querySelector(".fleet").outerHTML = fleetHtml;
-  //   document
-  //     .querySelectorAll(".occupied")
-  //     .forEach((el) => el.classList.remove("occupied"));
-  //   document.querySelectorAll(".square .ship-part").forEach((part) => {
-  //     part.parentNode.removeChild(part);
-  //   });
-  // });
-
   const randomBtn = document.querySelector(".random-btn");
   randomBtn.addEventListener("click", () => {
     document.querySelectorAll(".square .ship-part").forEach((part) => {
       part.parentNode.removeChild(part);
     });
+
+    document.querySelectorAll(".ship").forEach((ship) => (ship.innerHTML = ""));
 
     document
       .querySelectorAll(".occupied")
@@ -137,13 +122,11 @@ export const dragAndDrop = (function () {
 
   function handleDragStart(e) {
     e.dataTransfer.effectAllowed = "move";
-    console.log(selectedPartId);
   }
 
   function handleDrop(e) {
     // e.preventDefault();
     const selectedPart = document.getElementById(selectedPartId);
-    console.log(selectedPartId);
     const shipLength = selectedPart.parentNode.children.length;
     const offset = selectedPartId.substr(-1);
     const currentPos = this.dataset.position;
@@ -183,11 +166,11 @@ export const dragAndDrop = (function () {
       }
     }
 
-    if (nodeList.every((node) => node)) {
+    if (nodeList.every((node) => ![...node.classList].includes("occupied"))) {
       nodeList.forEach((node, i) => {
         if (partList[i]) {
           node.appendChild(partList[i]);
-          node.removeEventListener("drop", handleDrop);
+          // node.removeEventListener("drop", handleDrop);
         }
       });
       const positions = nodeList.map((node) => node.dataset.position);
@@ -197,21 +180,24 @@ export const dragAndDrop = (function () {
     return false;
   }
   function handleDragOver(e) {
-    // if (e.preventDefault) {
     e.preventDefault();
-    // }
-
-    // return false;
   }
 
-  const ships = document.querySelectorAll(".ship");
-  ships.forEach((ship) => {
-    ship.addEventListener("dragstart", handleDragStart);
-    ship.addEventListener("dragover", handleDragOver);
-    ship.childNodes.forEach((node) =>
-      node.addEventListener("mousedown", (e) => (selectedPartId = e.target.id))
-    );
-  });
+  function addDragListeners() {
+    const ships = document.querySelectorAll(".ship");
+    ships.forEach((ship) => {
+      ship.addEventListener("dragstart", handleDragStart);
+      ship.addEventListener("dragover", handleDragOver);
+      ship.childNodes.forEach((node) =>
+        node.addEventListener(
+          "mousedown",
+          (e) => (selectedPartId = e.target.id)
+        )
+      );
+    });
+  }
+  addDragListeners();
+
   let fleetHtml;
   window.addEventListener(
     "load",
@@ -227,24 +213,13 @@ export const dragAndDrop = (function () {
     document.querySelectorAll(".square .ship-part").forEach((part) => {
       part.parentNode.removeChild(part);
     });
-    const ships = document.querySelectorAll(".ship");
-    ships.forEach((ship) => {
-      ship.addEventListener("dragstart", handleDragStart);
-      ship.addEventListener("dragover", handleDragOver);
-      ship.childNodes.forEach((node) =>
-        node.addEventListener(
-          "mousedown",
-          (e) => (selectedPartId = e.target.id)
-        )
-      );
-    });
-    // pubsub.emit("boardReset", null);
-
-    const squares = document.querySelectorAll(".player.square");
-    squares.forEach((square) => {
-      square.addEventListener("dragover", handleDragOver);
-      square.addEventListener("drop", handleDrop);
-    });
+    const verticalItems = document.querySelectorAll(".vertical");
+    if (verticalItems) {
+      verticalItems.forEach((item) => item.classList.remove("vertical"));
+      horizontal = true;
+    }
+    addDragListeners();
+    pubsub.emit("boardReset", null);
   });
 
   const squares = document.querySelectorAll(".player.square");
@@ -252,8 +227,4 @@ export const dragAndDrop = (function () {
     square.addEventListener("dragover", handleDragOver);
     square.addEventListener("drop", handleDrop);
   });
-
-  // const playerBoard = document.querySelector(".player-board");
-  // playerBoard.addEventListener("drop", handleDrop);
-  // playerBoard.addEventListener("dragover", handleDragOver);
 })();
