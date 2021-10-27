@@ -37,7 +37,6 @@ import { pubsub } from "./pubsub";
     playerBoard.placeShip(submarine);
     playerBoard.placeShip(patrolBoat);
   };
-  // randomizePlacement();
   pubsub.on("randomized", randomizePlacement);
 
   const resetBoard = () => {
@@ -67,7 +66,6 @@ import { pubsub } from "./pubsub";
   let isGameOver = false;
   let turn = 1;
   const playerTurn = (Math.floor(Math.random() * 2) + 1) % 2;
-  console.log(playerTurn);
 
   const takeTurn = (coordinates = null) => {
     if (!isGameOver) {
@@ -85,8 +83,9 @@ import { pubsub } from "./pubsub";
       }
     }
   };
-  takeTurn();
   pubsub.on("attackLaunched", takeTurn);
+
+  pubsub.on("gameStarted", takeTurn);
 
   const handleShipSunk = (data) => {
     if (data.type !== "player") {

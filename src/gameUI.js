@@ -17,6 +17,7 @@ export const Interface = (function () {
       .querySelectorAll(".occupied")
       .forEach((el) => el.classList.remove("occupied"));
     pubsub.emit("randomized", null);
+    startBtn.disabled = false;
   });
 
   for (let i = 0; i < 121; i++) {
@@ -104,9 +105,20 @@ export const Interface = (function () {
     sq.addEventListener("click", setPosition, { once: true })
   );
 
-  document.querySelector(".start-btn").addEventListener("click", () => {
+  const startBtn = document.querySelector(".start-btn");
+  startBtn.disabled = true;
+  startBtn.addEventListener("click", () => {
     document.querySelector("main").classList.add("start");
+    pubsub.emit("gameStarted", null);
   });
+
+  const checkShipsPosition = () => {
+    const ships = document.querySelectorAll(".ship");
+    if ([...ships].every((ship) => ship.children.length === 0)) {
+      startBtn.disabled = false;
+    }
+  };
+  pubsub.on("shipPositioned", checkShipsPosition);
 })();
 
 export const dragAndDrop = (function () {
@@ -165,8 +177,12 @@ export const dragAndDrop = (function () {
         partList.push(part);
       }
     }
-
-    if (nodeList.every((node) => ![...node.classList].includes("occupied"))) {
+    const allNodesOpen = nodeList.every((node) => {
+      if (node) {
+        return ![...node.classList].includes("occupied");
+      }
+    });
+    if (allNodesOpen) {
       nodeList.forEach((node, i) => {
         if (partList[i]) {
           node.appendChild(partList[i]);
