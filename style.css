@@ -42,11 +42,20 @@ main.start {
   gap: 1rem;
 }
 
+.fleet.vertical {
+  flex-direction: row;
+}
+
 .ship {
   display: flex;
   width: min-content;
   cursor: move;
   background-color: blue;
+}
+
+.ship.vertical {
+  flex-direction: column;
+  height: min-content;
 }
 
 .ship-part {
