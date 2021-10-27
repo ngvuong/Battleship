@@ -59,7 +59,9 @@ export const Interface = (function () {
       sq.setAttribute("data-position", `${xLabels[i] + yLabels[j % 10]}`)
     );
 
-    row.forEach((sq, j) => sq.setAttribute("data-index", `${i * 10 + j + 1}`));
+    row.forEach((sq, j) =>
+      sq.setAttribute("data-index", `${i}-${i * 10 + j + 1}`)
+    );
   }
 
   const fillSquares = (data) => {
@@ -110,6 +112,7 @@ export const dragAndDrop = (function () {
 
   function handleDragStart(e) {
     e.dataTransfer.effectAllowed = "move";
+    // e.dataTransfer.setData("text/html", this.outerHTML);
   }
 
   function handleDrop(e) {
@@ -118,7 +121,9 @@ export const dragAndDrop = (function () {
     // dragSrcEl.innerHTML = this.innerHTML;
     // this.innerHTML = e.dataTransfer.getData("text/html");
     // console.log(e.dataTransfer.getData("text/html"));
-    // const shipId = e.dataTransfer.getData("text/html");
+    // const ship = e.dataTransfer.getData("text/html");
+    // console.log(ship);
+    e.preventDefault();
     const selectedPart = document.getElementById(selectedPartId);
     const shipLength = selectedPart.parentNode.children.length;
     console.log(shipLength);
@@ -128,6 +133,7 @@ export const dragAndDrop = (function () {
       currentPos.substr(0, 1) + (parseInt(currentPos.substr(-1)) - offset);
     // console.log(headPosition);
     const headNode = document.querySelector(`[data-position=${headPosition}]`);
+    // const tailNode = document.querySelector(`[data-position=${headPosition + shipLength-1}]`)
     // console.log(this);
     if (headNode) {
       // const id = ship.parentNode.id + "-0";
@@ -136,6 +142,8 @@ export const dragAndDrop = (function () {
       // this.appendChild(ship);
       // headNode.appendChild(headPart);
       const shipId = selectedPart.parentNode.id;
+      const nodeList = [];
+      const partList = [];
       for (let i = 0; i < shipLength; i++) {
         const node = document.querySelector(
           `[data-position=${
@@ -144,10 +152,20 @@ export const dragAndDrop = (function () {
         );
         const partId = `${shipId}-${i}`;
         const part = document.getElementById(partId);
+        nodeList.push(node);
+        partList.push(part);
         // console.log(part);
-        if (part) {
-          node.appendChild(part);
-        }
+        // if (part) {
+        //   node.appendChild(part);
+        // }
+      }
+      if (nodeList.every((node) => node)) {
+        nodeList.forEach((node, i) => {
+          if (partList[i]) {
+            node.appendChild(partList[i]);
+            node.removeEventListener("drop", handleDrop);
+          }
+        });
       }
       // const ship = document.getElementById(shipId);
       // document.querySelector(".fleet").removeChild(ship);
@@ -167,7 +185,7 @@ export const dragAndDrop = (function () {
   console.log(fleet);
   fleet.forEach((ship) => {
     // ship.addEventListener("dragstart", handleDragStart);
-    ship.addEventListener("dragover", handleDragOver);
+    // ship.addEventListener("dragover", handleDragOver);
     ship.childNodes.forEach((node) =>
       node.addEventListener("mousedown", (e) => (selectedPartId = e.target.id))
     );
