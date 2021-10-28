@@ -7,7 +7,7 @@ export function Player() {
   const attack = (enemyBoard, coordinates) => {
     if (!coordsAttacked.includes(coordinates)) {
       const outcome = enemyBoard.receiveAttack(coordinates);
-
+      console.log(coordinates);
       coordsAttacked.push(coordinates);
       return outcome;
     }

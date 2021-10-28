@@ -131,6 +131,7 @@ export const Interface = (function () {
   };
   pubsub.on("attacked", printToConsole);
   pubsub.on("shipSunkMessage", printToConsole);
+  pubsub.on("gameEnded", printToConsole);
 })();
 
 export const dragAndDrop = (function () {
