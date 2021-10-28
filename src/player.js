@@ -24,9 +24,9 @@ export function Ai() {
     randomAttack: (enemyBoard) => {
       const coordinates = utils.randomCoordinates();
       if (!coordsAttacked.includes(coordinates)) {
-        ai.attack(enemyBoard, coordinates);
+        const outcome = ai.attack(enemyBoard, coordinates);
         coordsAttacked.push(coordinates);
-        return coordinates;
+        return outcome;
       } else attackingAi.randomAttack(enemyBoard);
     },
   };

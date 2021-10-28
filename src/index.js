@@ -69,17 +69,23 @@ import { pubsub } from "./pubsub";
 
   const takeTurn = (coordinates = null) => {
     if (!isGameOver) {
-      console.log("turn" + turn);
       if (turn % 2 === playerTurn) {
         if (coordinates) {
-          humanPlayer.attack(aiBoard, coordinates);
-          turn++;
-          takeTurn();
+          setTimeout(() => {
+            const outcome = humanPlayer.attack(aiBoard, coordinates);
+            pubsub.emit("attacked", { attacker: "player", outcome });
+            turn++;
+            takeTurn();
+          });
         }
       } else {
-        ai.randomAttack(playerBoard);
-        turn++;
-        takeTurn();
+        let outcome;
+        setTimeout(() => {
+          outcome = ai.randomAttack(playerBoard);
+          pubsub.emit("attacked", { attacker: "enemy", outcome });
+          turn++;
+          takeTurn();
+        }, 200);
       }
     }
   };
@@ -90,9 +96,15 @@ import { pubsub } from "./pubsub";
   const handleShipSunk = (data) => {
     if (data.type !== "player") {
       console.log("An enemy ship was sunk!");
+      setTimeout(() => {
+        pubsub.emit("shipSunkMessage", { message: "An enemy ship was sunk!" });
+      });
       checkWinner();
     } else {
       console.log("An ally ship was sunk!");
+      setTimeout(() => {
+        pubsub.emit("shipSunkMessage", { message: "An ally ship was sunk!" });
+      });
       checkWinner();
     }
   };

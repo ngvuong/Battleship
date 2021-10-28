@@ -92,17 +92,17 @@ export const Interface = (function () {
       `.${data.type}[data-position=${data.coordinates}]`
     );
     target.classList.add("hit");
-    target.textContent = "X";
+    target.innerHTML = "&#10006;";
   };
   pubsub.on("attackHit", markHit);
 
-  const setPosition = (e) => {
+  const attackPosition = (e) => {
     const position = e.target.dataset.position;
     pubsub.emit("attackLaunched", position);
   };
   const squares = document.querySelectorAll(".enemy.square");
   squares.forEach((sq) =>
-    sq.addEventListener("click", setPosition, { once: true })
+    sq.addEventListener("click", attackPosition, { once: true })
   );
 
   const startBtn = document.querySelector(".start-btn");
@@ -112,13 +112,25 @@ export const Interface = (function () {
     pubsub.emit("gameStarted", null);
   });
 
-  const checkShipsPosition = () => {
+  const checkGameStart = () => {
     const ships = document.querySelectorAll(".ship");
     if ([...ships].every((ship) => ship.children.length === 0)) {
       startBtn.disabled = false;
     }
   };
-  pubsub.on("shipPositioned", checkShipsPosition);
+  pubsub.on("shipPositioned", checkGameStart);
+
+  const textConsole = document.querySelector(".console");
+  const printToConsole = (data) => {
+    if (data.attacker) {
+      const outcome = data.outcome === -1 ? "hit" : "miss";
+      textConsole.innerHTML += `The ${data.attacker} launched an attack. It's a ${outcome}!<br/>`;
+    } else if (data.message) {
+      textConsole.innerHTML += `${data.message}<br/>`;
+    }
+  };
+  pubsub.on("attacked", printToConsole);
+  pubsub.on("shipSunkMessage", printToConsole);
 })();
 
 export const dragAndDrop = (function () {

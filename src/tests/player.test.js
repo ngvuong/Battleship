@@ -31,5 +31,5 @@ it("attacks player and sinks the last ship", () => {
 });
 
 it("attacks player randomly", () => {
-  expect(ai.randomAttack(playerBoard)).toBeTruthy();
+  expect(ai.randomAttack(playerBoard)).toBe(0);
 });

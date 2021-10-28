@@ -64,7 +64,6 @@ export function Gameboard(type = "player") {
         if (ship.isSunk()) {
           ships.splice(ships.indexOf(ship), 1);
           pubsub.emit("shipSunk", { ship, type });
-          console.log("ship sunk");
         }
       });
     }
