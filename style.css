@@ -75,9 +75,15 @@ main.start {
   top: 45%;
 }
 
+.start-btn:disabled {
+  opacity: 0.5;
+}
+
 button {
   color: #e8e6e3;
   background-color: #191c1d;
+  border-style: none;
+  font-size: 1.5vw;
 }
 
 .config-btns {
@@ -91,6 +97,7 @@ button {
 .boards {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100vw;
 }
 
@@ -135,6 +142,7 @@ button {
 
 .square.occupied {
   background-color: gray;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
 .square.missed {
@@ -143,4 +151,18 @@ button {
 
 .square.hit {
   background-color: red;
+}
+
+.console {
+  /* visibility: hidden; */
+  display: flex;
+  flex-direction: column-reverse;
+  width: calc(85vw - 22 * 2.5vw);
+  height: 16vh;
+  background-color: rgba(128, 128, 128, 0.2);
+  overflow-y: auto;
+}
+
+.console.show {
+  visibility: visible;
 }
