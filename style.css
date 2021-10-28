@@ -29,14 +29,11 @@ main.start {
 .config {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   position: relative;
   width: 30vw;
   height: calc(3vw * 11 + 10px);
-  /* transform: translateX(-100%); */
-  /* position: absolute;
-  left: -15%; */
+  padding: 0.5vw;
 }
 
 .config span {
@@ -74,27 +71,24 @@ main.start {
   /* z-index: 1; */
 }
 
-.start-btn {
-  position: absolute;
-  right: 0;
-  top: 45%;
-}
-
 .start-btn:disabled {
   opacity: 0.5;
+  cursor: default;
 }
 
 button {
   color: #e8e6e3;
-  background-color: #191c1d;
+  background-color: #3d87a0;
   border-style: none;
-  font-size: 1.5vw;
+  font-size: 2vw;
+  margin: 0.5vw;
+  cursor: pointer;
 }
 
 .config-btns {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  /* gap: 1vw; */
   position: absolute;
   bottom: 0;
 }
@@ -116,7 +110,7 @@ button {
 }
 
 .enemy-board {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(11, 2.5vw);
   width: min-content;
   grid-gap: 1px;
@@ -159,11 +153,12 @@ button {
 }
 
 .console {
-  /* visibility: hidden; */
+  visibility: hidden;
   display: flex;
   flex-direction: column-reverse;
   width: calc(85vw - 22 * 2.5vw);
   height: 16vh;
+  font-size: clamp(0.5rem, 1vw, 1rem);
   background-color: rgba(128, 128, 128, 0.2);
   overflow-y: auto;
 }
@@ -172,10 +167,23 @@ button {
   visibility: visible;
 }
 
+.display-overlay {
+  position: fixed;
+  visibility: hidden;
+  width: 100vw;
+  height: 25vh;
+}
+
+.display-overlay.visible {
+  visibility: visible;
+}
+
+.restart-btn {
+}
+
 @media screen and (max-width: 960px) {
   main {
     transform: translateX(0);
-    flex-direction: column;
   }
   .config {
     height: 50vw;
@@ -183,10 +191,10 @@ button {
   .boards {
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
   }
   .player-board {
     margin-left: 0;
+    margin: auto;
   }
   .enemy-board {
     margin-right: 0;
@@ -195,5 +203,27 @@ button {
     width: 50vw;
     height: 9vh;
     margin: 2vw 0 2vw;
+  }
+
+  .boards {
+    padding-right: 25vw;
+    height: fit-content;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .player-board,
+  .enemy-board {
+    grid-template-columns: repeat(11, 4vw);
+  }
+
+  .square {
+    width: 4vw;
+    height: 4vw;
+  }
+
+  .ship-part {
+    width: 4vw;
+    height: 4vw;
   }
 }
