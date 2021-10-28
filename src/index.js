@@ -101,9 +101,11 @@ import { pubsub } from "./pubsub";
   const checkWinner = () => {
     if (playerBoard.allShipsSunk()) {
       isGameOver = true;
+      pubsub.emit("gameEnded", "Computer");
       console.log("You lost!");
     } else if (aiBoard.allShipsSunk()) {
       isGameOver = true;
+      pubsub.emit("gameEnded", "Player");
       console.log("You won!");
     }
   };

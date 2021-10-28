@@ -6,7 +6,9 @@
 
 body {
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  color: #e8e6e3;
+  background-color: #282b2c;
 }
 
 main {
@@ -60,7 +62,7 @@ main.start {
 .ship-part {
   width: 2.5vw;
   height: 2.5vw;
-  background-color: red;
+  background-color: gray;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
 
   /* border: 1px solid black; */
@@ -71,6 +73,11 @@ main.start {
   position: absolute;
   right: 0;
   top: 45%;
+}
+
+button {
+  color: #e8e6e3;
+  background-color: #191c1d;
 }
 
 .config-btns {
@@ -110,7 +117,7 @@ main.start {
   justify-content: center;
   align-items: center;
   font-size: 2.5vw;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 1px rgba(170, 170, 170, 0.5);
   /* border: 1px solid rgba(0, 0, 0, 0.5); */
   width: 2.5vw;
   height: 2.5vw;
@@ -120,14 +127,14 @@ main.start {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2vw;
-  font-weight: bold;
+  font-size: 1.5vw;
+  font-weight: 300;
   box-shadow: none;
   border: none;
 }
 
 .square.occupied {
-  background-color: red;
+  background-color: gray;
 }
 
 .square.missed {

@@ -41,7 +41,7 @@ export const Interface = (function () {
     ];
     colLabels.slice(1).forEach((label, i) => {
       label.className = "label";
-      label.textContent = yLabels[i];
+      label.textContent = yLabels[i] + 1;
     });
 
     let rowLabels = [
@@ -70,10 +70,10 @@ export const Interface = (function () {
 
   const fillSquares = (data) => {
     const positions = data.positions;
-    if (data.type) {
+    if (data.type === "player") {
       positions.forEach((pos) =>
         document
-          .querySelector(`.${data.type}[data-position =${pos}]`)
+          .querySelector(`.player[data-position =${pos}]`)
           .classList.add("occupied")
       );
     }
