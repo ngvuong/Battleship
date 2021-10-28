@@ -67,6 +67,7 @@ export function Gameboard(type = "player") {
         }
       });
     }
+    console.log(board[coordinates]);
     return board[coordinates];
   };
 

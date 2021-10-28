@@ -4,6 +4,7 @@ import { pubsub } from "./pubsub";
 export const Interface = (function () {
   const playerBoard = document.querySelector(".player-board");
   const enemyBoard = document.querySelector(".enemy-board");
+  const textConsole = document.querySelector(".console");
 
   const randomBtn = document.querySelector(".random-btn");
   randomBtn.addEventListener("click", () => {
@@ -109,6 +110,9 @@ export const Interface = (function () {
   startBtn.disabled = true;
   startBtn.addEventListener("click", () => {
     document.querySelector("main").classList.add("start");
+    document.querySelector(".boards").style.paddingRight = "0";
+    enemyBoard.style.display = "grid";
+    textConsole.classList.add("show");
     pubsub.emit("gameStarted", null);
   });
 
@@ -120,10 +124,10 @@ export const Interface = (function () {
   };
   pubsub.on("shipPositioned", checkGameStart);
 
-  const textConsole = document.querySelector(".console");
   const printToConsole = (data) => {
     if (data.attacker) {
       const outcome = data.outcome === -1 ? "hit" : "miss";
+      console.log(data.outcome);
       textConsole.innerHTML += `The ${data.attacker} launched an attack. It's a ${outcome}!<br/>`;
     } else if (data.message) {
       textConsole.innerHTML += `${data.message}<br/>`;
@@ -235,6 +239,7 @@ export const dragAndDrop = (function () {
 
   const resetBtn = document.querySelector(".reset-btn");
   resetBtn.addEventListener("click", () => {
+    document.querySelector(".start-btn").disabled = true;
     document.querySelector(".fleet").outerHTML = fleetHtml;
     document
       .querySelectorAll(".occupied")

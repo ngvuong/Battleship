@@ -26,6 +26,7 @@ export function Ai() {
       if (!coordsAttacked.includes(coordinates)) {
         const outcome = ai.attack(enemyBoard, coordinates);
         coordsAttacked.push(coordinates);
+        console.log(outcome);
         return outcome;
       } else attackingAi.randomAttack(enemyBoard);
     },
