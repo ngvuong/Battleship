@@ -5,10 +5,11 @@
 }
 
 body {
-  margin: 0;
-  overflow-x: hidden;
+  font-size: 2.5vw;
   color: #e8e6e3;
   background-color: #282b2c;
+  overflow-x: hidden;
+  margin: 0;
 }
 
 main {
@@ -38,10 +39,14 @@ main.start {
   left: -15%; */
 }
 
+.config span {
+  white-space: nowrap;
+}
+
 .fleet {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1vw;
 }
 
 .fleet.vertical {
@@ -62,7 +67,7 @@ main.start {
 .ship-part {
   width: 2.5vw;
   height: 2.5vw;
-  background-color: gray;
+  background-color: #ffcc20;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
 
   /* border: 1px solid black; */
@@ -141,7 +146,7 @@ button {
 }
 
 .square.occupied {
-  background-color: gray;
+  background-color: #ffcc20;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
@@ -165,4 +170,30 @@ button {
 
 .console.show {
   visibility: visible;
+}
+
+@media screen and (max-width: 960px) {
+  main {
+    transform: translateX(0);
+    flex-direction: column;
+  }
+  .config {
+    height: 50vw;
+  }
+  .boards {
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+  }
+  .player-board {
+    margin-left: 0;
+  }
+  .enemy-board {
+    margin-right: 0;
+  }
+  .console {
+    width: 50vw;
+    height: 9vh;
+    margin: 2vw 0 2vw;
+  }
 }
