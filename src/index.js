@@ -76,7 +76,7 @@ import { pubsub } from "./pubsub";
             pubsub.emit("attacked", { attacker: "player", outcome });
             turn++;
             takeTurn();
-          }, 0);
+          });
         }
       } else {
         setTimeout(() => {
@@ -84,7 +84,7 @@ import { pubsub } from "./pubsub";
           pubsub.emit("attacked", { attacker: "enemy", outcome });
           turn++;
           takeTurn();
-        }, 0);
+        });
       }
     }
   };
@@ -97,13 +97,13 @@ import { pubsub } from "./pubsub";
       console.log("An enemy ship was sunk!");
       setTimeout(() => {
         pubsub.emit("shipSunkMessage", { message: "An enemy ship was sunk!" });
-      }, 0);
+      });
       checkWinner();
     } else if (data.type === "player") {
       console.log("An ally ship was sunk!");
       setTimeout(() => {
         pubsub.emit("shipSunkMessage", { message: "An ally ship was sunk!" });
-      }, 0);
+      });
       checkWinner();
     }
   };
@@ -114,13 +114,13 @@ import { pubsub } from "./pubsub";
       isGameOver = true;
       setTimeout(() => {
         pubsub.emit("gameEnded", { message: "Computer wins!" });
-      }, 0);
+      });
       console.log("You lost!");
     } else if (aiBoard.allShipsSunk()) {
       isGameOver = true;
       setTimeout(() => {
         pubsub.emit("gameEnded", { message: "Player wins!" });
-      }, 0);
+      });
       console.log("You won!");
     }
   };

@@ -9,6 +9,10 @@ export function Player() {
       const outcome = enemyBoard.receiveAttack(coordinates);
       console.log(coordinates);
       coordsAttacked.push(coordinates);
+      // if(outcome === 0) {
+      // pubsub.emit("attackMissed", { coordinates, type });
+
+      // } else pubsub.emit("attackHit")
       return outcome;
     }
   };
@@ -22,13 +26,22 @@ export function Ai() {
 
   const attackingAi = {
     randomAttack: (enemyBoard) => {
-      const coordinates = utils.randomCoordinates();
-      if (!coordsAttacked.includes(coordinates)) {
-        const outcome = ai.attack(enemyBoard, coordinates);
-        coordsAttacked.push(coordinates);
-        console.log(outcome);
-        return outcome;
-      } else attackingAi.randomAttack(enemyBoard);
+      let coordinates = utils.randomCoordinates();
+      // if (!coordsAttacked.includes(coordinates)) {
+      //   const outcome = ai.attack(enemyBoard, coordinates);
+      //   coordsAttacked.push(coordinates);
+      //   console.log(outcome);
+      //   return outcome;
+      // } else {
+      //   console.log("duplicate", coordinates);
+      //   randomAttack(enemyBoard);
+      // }
+      while (coordsAttacked.includes(coordinates)) {
+        coordinates = utils.randomCoordinates();
+      }
+      const outcome = ai.attack(enemyBoard, coordinates);
+      coordsAttacked.push(coordinates);
+      return outcome;
     },
   };
 

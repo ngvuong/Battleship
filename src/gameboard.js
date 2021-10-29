@@ -62,8 +62,8 @@ export function Gameboard(type = "player") {
       pubsub.emit("attackHit", { coordinates, type });
       ships.forEach((ship) => {
         if (ship.isSunk()) {
-          ships.splice(ships.indexOf(ship), 1);
           pubsub.emit("shipSunk", { ship, type });
+          ships.splice(ships.indexOf(ship), 1);
         }
       });
     }
