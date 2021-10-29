@@ -12,11 +12,18 @@ body {
   margin: 0;
 }
 
+.title {
+  text-align: center;
+  font-size: clamp(3rem, 6vw, 5rem);
+  height: 10vh;
+  /* margin-bottom: 2rem; */
+}
+
 main {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
   width: max-content;
   transform: translateX(5%);
   transition: all 0.5s ease-in;
@@ -183,8 +190,13 @@ button {
 
 @media screen and (max-width: 960px) {
   main {
+    margin-top: 5%;
+  }
+
+  main.start {
     transform: translateX(0);
-    /* flex-direction: column; */
+    flex-direction: column;
+    /* justify-content: flex-start; */
   }
 
   .config {
@@ -193,10 +205,12 @@ button {
   .boards {
     flex-direction: column;
     align-items: center;
+    /* margin-bottom: 50%; */
+    padding-right: 25vw;
   }
   .player-board {
     margin-left: 0;
-    margin: auto;
+    /* margin: auto; */
   }
   .enemy-board {
     margin-right: 0;
@@ -208,8 +222,15 @@ button {
   }
 
   .boards {
-    padding-right: 25vw;
+    /* padding-right: 25vw; */
+    /* position: relative;
+    top: 50%; */
     /* height: fit-content; */
+  }
+
+  .config.hide {
+    visibility: hidden;
+    height: 10vw;
   }
 
   .config-btns {
@@ -220,23 +241,28 @@ button {
 @media screen and (max-width: 768px) {
   .player-board,
   .enemy-board {
-    grid-template-columns: repeat(11, 4vw);
+    grid-template-columns: repeat(11, 3vw);
   }
 
   .square {
-    width: 4vw;
-    height: 4vw;
+    width: 3vw;
+    height: 3vw;
   }
 
   .ship-part {
-    width: 4vw;
-    height: 4vw;
+    width: 3vw;
+    height: 3vw;
+  }
+
+  .config-btns {
+    position: relative;
   }
 }
 
 @media screen and (max-width: 478px) {
   main {
     flex-direction: column;
+    /* justify-content: flex-start; */
   }
 
   main.start {
@@ -244,6 +270,7 @@ button {
   }
 
   .boards {
+    /* top: 0; */
     padding: 0;
   }
 }
