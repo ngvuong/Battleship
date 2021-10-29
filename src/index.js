@@ -94,13 +94,11 @@ import { pubsub } from "./pubsub";
 
   const handleShipSunk = (data) => {
     if (data.type !== "player") {
-      console.log("An enemy ship was sunk!");
       setTimeout(() => {
         pubsub.emit("shipSunkMessage", { message: "An enemy ship was sunk!" });
       });
       checkWinner();
     } else if (data.type === "player") {
-      console.log("An ally ship was sunk!");
       setTimeout(() => {
         pubsub.emit("shipSunkMessage", { message: "An ally ship was sunk!" });
       });
@@ -115,13 +113,11 @@ import { pubsub } from "./pubsub";
       setTimeout(() => {
         pubsub.emit("gameEnded", { message: "Computer wins!" });
       });
-      console.log("You lost!");
     } else if (aiBoard.allShipsSunk()) {
       isGameOver = true;
       setTimeout(() => {
         pubsub.emit("gameEnded", { message: "Player wins!" });
       });
-      console.log("You won!");
     }
   };
 })();

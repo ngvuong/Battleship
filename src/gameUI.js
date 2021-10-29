@@ -128,7 +128,6 @@ export const Interface = (function () {
   const printToConsole = (data) => {
     if (data.attacker) {
       const outcome = data.outcome === -1 ? "hit" : "miss";
-      console.log(data.outcome);
       textConsole.innerHTML += `The ${data.attacker} launched an attack. It's a ${outcome}!<br/>`;
     } else if (data.message) {
       textConsole.innerHTML += `${data.message}<br/>`;
@@ -137,6 +136,17 @@ export const Interface = (function () {
   pubsub.on("attacked", printToConsole);
   pubsub.on("shipSunkMessage", printToConsole);
   pubsub.on("gameEnded", printToConsole);
+
+  const displayEndScreen = (data) => {
+    document.querySelector(".display-overlay").classList.add("visible");
+    const message = document.querySelector(".message");
+    message.textContent = data.message;
+
+    document
+      .querySelector(".restart-btn")
+      .addEventListener("click", () => window.location.reload());
+  };
+  pubsub.on("gameEnded", displayEndScreen);
 })();
 
 export const dragAndDrop = (function () {
@@ -155,7 +165,6 @@ export const dragAndDrop = (function () {
   }
 
   function handleDrop(e) {
-    // e.preventDefault();
     const selectedPart = document.getElementById(selectedPartId);
     const shipLength = selectedPart.parentNode.children.length;
     const offset = selectedPartId.substr(-1);
@@ -204,7 +213,6 @@ export const dragAndDrop = (function () {
       nodeList.forEach((node, i) => {
         if (partList[i]) {
           node.appendChild(partList[i]);
-          // node.removeEventListener("drop", handleDrop);
         }
       });
       const positions = nodeList.map((node) => node.dataset.position);
