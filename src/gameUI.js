@@ -111,7 +111,7 @@ export const Interface = (function () {
   startBtn.addEventListener("click", () => {
     document.querySelector("main").classList.add("start");
     document.querySelector(".boards").style.paddingRight = "0";
-    document.querySelector(".config").style.visibility = "hidden";
+    document.querySelector(".config").classList.add("hide");
     enemyBoard.style.display = "grid";
     textConsole.classList.add("show");
     pubsub.emit("gameStarted", null);
