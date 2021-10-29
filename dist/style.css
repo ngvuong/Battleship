@@ -184,7 +184,9 @@ button {
 @media screen and (max-width: 960px) {
   main {
     transform: translateX(0);
+    /* flex-direction: column; */
   }
+
   .config {
     height: 50vw;
   }
@@ -201,13 +203,17 @@ button {
   }
   .console {
     width: 50vw;
-    height: 9vh;
+    height: 12vw;
     margin: 2vw 0 2vw;
   }
 
   .boards {
     padding-right: 25vw;
-    height: fit-content;
+    /* height: fit-content; */
+  }
+
+  .config-btns {
+    position: relative;
   }
 }
 
@@ -225,5 +231,19 @@ button {
   .ship-part {
     width: 4vw;
     height: 4vw;
+  }
+}
+
+@media screen and (max-width: 478px) {
+  main {
+    flex-direction: column;
+  }
+
+  main.start {
+    transform: translateX(0);
+  }
+
+  .boards {
+    padding: 0;
   }
 }
