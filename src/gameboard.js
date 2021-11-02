@@ -4,6 +4,7 @@ import { utils } from "./utils";
 export function Gameboard(type = "player") {
   const board = {};
   const ships = [];
+  const shipsSunk = [];
 
   const xCoord = utils.x;
   const yCoord = utils.y;
@@ -60,17 +61,20 @@ export function Gameboard(type = "player") {
     } else if (board[coordinates] === 1) {
       board[coordinates] = -1;
       pubsub.emit("attackHit", { coordinates, type });
+      console.log(coordinates);
       ships.forEach((ship) => {
         if (ship.isSunk()) {
+          console.log(ship.getPositions());
+          shipsSunk.push(...ships.splice(ships.indexOf(ship), 1));
           pubsub.emit("shipSunk", { ship, type });
-          ships.splice(ships.indexOf(ship), 1);
         }
       });
     }
     return board[coordinates];
   };
 
-  const allShipsSunk = () => ships.every((ship) => ship.isSunk());
+  // const allShipsSunk = () => ships.every((ship) => ship.isSunk());
+  const allShipsSunk = () => shipsSunk.length === 5;
 
   return { board, ships, placeShip, receiveAttack, allShipsSunk };
 }

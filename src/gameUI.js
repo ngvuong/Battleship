@@ -166,60 +166,63 @@ export const dragAndDrop = (function () {
 
   function handleDrop(e) {
     const selectedPart = document.getElementById(selectedPartId);
-    const shipLength = selectedPart.parentNode.children.length;
-    const offset = selectedPartId.substr(-1);
-    const currentPos = this.dataset.position;
-    const shipId = selectedPart.parentNode.id;
+    if (selectedPart) {
+      const shipLength = selectedPart.parentNode.children.length;
+      const offset = selectedPartId.substr(-1);
+      const shipId = selectedPart.parentNode.id;
 
-    const nodeList = [];
-    const partList = [];
+      const currentPos = this.dataset.position;
 
-    if (horizontal) {
-      const headPositionRow = currentPos.substr(0, 1);
-      const headPositionCol = parseInt(currentPos.substr(-1)) - offset;
+      const nodeList = [];
+      const partList = [];
 
-      for (let i = 0; i < shipLength; i++) {
-        const node = document.querySelector(
-          `[data-position=${headPositionRow + (headPositionCol + i)}]`
-        );
-        const partId = `${shipId}-${i}`;
-        const part = document.getElementById(partId);
-        nodeList.push(node);
-        partList.push(part);
+      if (horizontal) {
+        const headPositionRow = currentPos.substr(0, 1);
+        const headPositionCol = parseInt(currentPos.substr(-1)) - offset;
+
+        for (let i = 0; i < shipLength; i++) {
+          const node = document.querySelector(
+            `[data-position=${headPositionRow + (headPositionCol + i)}]`
+          );
+          const partId = `${shipId}-${i}`;
+          const part = document.getElementById(partId);
+          nodeList.push(node);
+          partList.push(part);
+        }
+      } else {
+        const xCoord = utils.x;
+        const currentPositionRowIndex = xCoord.indexOf(currentPos.substr(0, 1));
+        const headPositionRowIndex = currentPositionRowIndex - offset;
+        const headPositionCol = currentPos.substr(-1);
+
+        for (let i = 0; i < shipLength; i++) {
+          const row = xCoord[headPositionRowIndex + i];
+          const node = document.querySelector(
+            `[data-position=${row + headPositionCol}]`
+          );
+          const partId = `${shipId}-${i}`;
+          const part = document.getElementById(partId);
+          nodeList.push(node);
+          partList.push(part);
+        }
       }
-    } else {
-      const xCoord = utils.x;
-      const currentPositionRowIndex = xCoord.indexOf(currentPos.substr(0, 1));
-      const headPositionRowIndex = currentPositionRowIndex - offset;
-      const headPositionCol = currentPos.substr(-1);
-
-      for (let i = 0; i < shipLength; i++) {
-        const row = xCoord[headPositionRowIndex + i];
-        const node = document.querySelector(
-          `[data-position=${row + headPositionCol}]`
-        );
-        const partId = `${shipId}-${i}`;
-        const part = document.getElementById(partId);
-        nodeList.push(node);
-        partList.push(part);
-      }
-    }
-    const allNodesOpen = nodeList.every((node) => {
-      if (node) {
-        return ![...node.classList].includes("occupied");
-      }
-    });
-    if (allNodesOpen) {
-      nodeList.forEach((node, i) => {
-        if (partList[i]) {
-          node.appendChild(partList[i]);
+      const allNodesOpen = nodeList.every((node) => {
+        if (node) {
+          return ![...node.classList].includes("occupied");
         }
       });
-      const positions = nodeList.map((node) => node.dataset.position);
-      pubsub.emit("shipPositioned", positions);
-    }
+      if (allNodesOpen) {
+        nodeList.forEach((node, i) => {
+          if (partList[i]) {
+            node.appendChild(partList[i]);
+          }
+        });
+        const positions = nodeList.map((node) => node.dataset.position);
+        pubsub.emit("shipPositioned", positions);
+      }
 
-    return false;
+      return false;
+    }
   }
   function handleDragOver(e) {
     e.preventDefault();
