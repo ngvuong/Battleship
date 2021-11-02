@@ -6,6 +6,7 @@
 
 body {
   font-size: 2.5vw;
+  font-family: "Metal Mania", cursive;
   color: #e8e6e3;
   background-color: #282b2c;
   overflow-x: hidden;
@@ -180,7 +181,7 @@ button {
   visibility: hidden;
   color: #ffcc20;
   width: 100vw;
-  height: 25vh;
+  height: 20vw;
   background-color: rgba(187, 187, 187, 0.8);
 }
 
@@ -258,6 +259,25 @@ button {
 
   main.start {
     transform: translateX(0);
+  }
+
+  .player-board,
+  .enemy-board {
+    grid-template-columns: repeat(11, 4vw);
+  }
+
+  .player-board {
+    margin-top: 1rem;
+  }
+
+  .square {
+    width: 4vw;
+    height: 4vw;
+  }
+
+  .ship-part {
+    width: 4vw;
+    height: 4vw;
   }
 
   .boards {
