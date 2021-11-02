@@ -46,11 +46,11 @@ import { pubsub } from "./pubsub";
 
   // Ai board
   const aiBoard = Gameboard("enemy");
-  const aiCarrier = Ship(5);
-  const aiBattleship = Ship(4);
-  const aiDestroyer = Ship(3);
-  const aiSubmarine = Ship(3);
-  const aiPatrolBoat = Ship(2);
+  const aiCarrier = Ship(5, "enemy");
+  const aiBattleship = Ship(4, "enemy");
+  const aiDestroyer = Ship(3, "enemy");
+  const aiSubmarine = Ship(3, "enemy");
+  const aiPatrolBoat = Ship(2, "enemy");
 
   aiBoard.placeShip(aiCarrier);
   aiBoard.placeShip(aiBattleship);

@@ -1,6 +1,6 @@
 import { pubsub } from "./pubsub";
 
-export function Ship(length) {
+export function Ship(length, type = "player") {
   const shipPositions = {};
 
   const getLength = () => {
@@ -17,8 +17,11 @@ export function Ship(length) {
     });
   };
   const _hit = (data) => {
-    if (Object.keys(shipPositions).includes(data.coordinates)) {
-      shipPositions[data.coordinates].isHit = true;
+    const isAShipPosition = Object.keys(shipPositions).includes(
+      data.coordinates
+    );
+    if (isAShipPosition && data.type === type) {
+      shipPositions[data.coordinates]["isHit"] = true;
     }
   };
   pubsub.on("attackHit", _hit);

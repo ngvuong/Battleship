@@ -71,13 +71,13 @@ export const Interface = (function () {
 
   const fillSquares = (data) => {
     const positions = data.positions;
-    if (data.type === "player") {
-      positions.forEach((pos) =>
-        document
-          .querySelector(`.player[data-position =${pos}]`)
-          .classList.add("occupied")
-      );
-    }
+    // if (data.type === "player") {
+    positions.forEach((pos) =>
+      document
+        .querySelector(`.${data.type}[data-position =${pos}]`)
+        .classList.add("occupied")
+    );
+    // }
   };
   pubsub.on("shipPlaced", fillSquares);
 
