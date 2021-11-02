@@ -15,6 +15,7 @@ export function Player() {
   return { attack };
 }
 
+// Ai extends Player to allow random attacks
 export function Ai() {
   const coordsAttacked = [];
   const ai = Player();

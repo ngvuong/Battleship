@@ -20,7 +20,7 @@ export const Interface = (function () {
     pubsub.emit("randomized", null);
     startBtn.disabled = false;
   });
-
+  // Creating grids for game boards
   for (let i = 0; i < 121; i++) {
     const playerSquare = document.createElement("div");
     playerSquare.className = "square player";
@@ -71,13 +71,13 @@ export const Interface = (function () {
 
   const fillSquares = (data) => {
     const positions = data.positions;
-    // if (data.type === "player") {
-    positions.forEach((pos) =>
-      document
-        .querySelector(`.${data.type}[data-position =${pos}]`)
-        .classList.add("occupied")
-    );
-    // }
+    if (data.type === "player") {
+      positions.forEach((pos) =>
+        document
+          .querySelector(`.player[data-position =${pos}]`)
+          .classList.add("occupied")
+      );
+    }
   };
   pubsub.on("shipPlaced", fillSquares);
 
@@ -149,6 +149,7 @@ export const Interface = (function () {
   pubsub.on("gameEnded", displayEndScreen);
 })();
 
+// Drag and drop for placing ships manually
 export const dragAndDrop = (function () {
   let selectedPartId;
   let horizontal = true;

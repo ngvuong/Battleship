@@ -16,6 +16,7 @@ export function Ship(length, type = "player") {
       shipPositions[pos] = { isHit: false };
     });
   };
+  // Only the correct ship gets hit using type and ship positions
   const _hit = (data) => {
     const isAShipPosition = Object.keys(shipPositions).includes(
       data.coordinates

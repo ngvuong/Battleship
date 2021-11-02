@@ -12,7 +12,7 @@ import { pubsub } from "./pubsub";
   const destroyer = Ship(3);
   const submarine = Ship(3);
   const patrolBoat = Ship(2);
-
+  // Drag and Drop ships for placement based on length
   const positionShip = (positions) => {
     if (positions.length === 5) {
       playerBoard.placeShip(carrier, positions);

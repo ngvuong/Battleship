@@ -7,6 +7,8 @@ export function Gameboard(type = "player") {
 
   const xCoord = utils.x;
   const yCoord = utils.y;
+
+  // Set up 10x10 grid
   const gridCoords = xCoord.map((x) => {
     return yCoord.map((y) => x + y);
   });
@@ -25,6 +27,7 @@ export function Gameboard(type = "player") {
         return ship.getPositions();
       } else console.error("Invalid position");
     } else {
+      // Picking positions based on a random head position and direction
       const shipLength = ship.getLength();
       const headPosition = utils.randomCoordinates();
       const orientation = Math.floor(Math.random() * 2);
@@ -60,13 +63,10 @@ export function Gameboard(type = "player") {
     } else if (board[coordinates] === 1) {
       board[coordinates] = -1;
       pubsub.emit("attackHit", { coordinates, type });
-      console.log(coordinates);
       ships.forEach((ship) => {
         if (ship.isSunk()) {
-          console.log(ship.getPositions());
           ships.splice(ships.indexOf(ship), 1);
           pubsub.emit("shipSunk", { ship, type });
-          console.log(ship);
         }
       });
     }
@@ -75,5 +75,5 @@ export function Gameboard(type = "player") {
 
   const allShipsSunk = () => ships.length === 0;
 
-  return { board, ships, placeShip, receiveAttack, allShipsSunk };
+  return { board, placeShip, receiveAttack, allShipsSunk };
 }
